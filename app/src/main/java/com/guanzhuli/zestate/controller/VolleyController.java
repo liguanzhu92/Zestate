@@ -16,7 +16,6 @@ public class VolleyController extends Application {
             .getSimpleName();
 
     private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
 
     private static VolleyController mInstance;
 

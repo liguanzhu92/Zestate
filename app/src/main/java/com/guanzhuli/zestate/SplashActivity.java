@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.VideoView;
-import com.guanzhuli.zestate.Register.RegisterActivity;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

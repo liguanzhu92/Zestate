@@ -1,4 +1,4 @@
-package com.guanzhuli.zestate.Register.fragment;
+package com.guanzhuli.zestate.buyer;
 
 
 import android.os.Bundle;
