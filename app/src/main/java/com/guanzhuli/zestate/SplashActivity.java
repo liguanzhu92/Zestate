@@ -1,5 +1,6 @@
 package com.guanzhuli.zestate;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.VideoView;
+import com.guanzhuli.zestate.Register.RegisterActivity;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,6 +19,7 @@ import android.widget.VideoView;
 public class SplashActivity extends AppCompatActivity {
     private VideoView mVideoView;
     private View mControlsView;
+    private Button mButtonSignIn, mButtonSignUp;
     private AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
 
     @Override
@@ -40,6 +44,13 @@ public class SplashActivity extends AppCompatActivity {
         });
         mVideoView.start();
 
+        mButtonSignUp = (Button) findViewById(R.id.splash_sign_up_button);
+        mButtonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+            }
+        });
 
         // Set up the user interaction to manually show or hide the system UI.
 
@@ -49,4 +60,9 @@ public class SplashActivity extends AppCompatActivity {
         // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mVideoView.stopPlayback();
+    }
 }
