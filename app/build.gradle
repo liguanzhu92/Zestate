@@ -38,5 +38,6 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.18.0'
     compile 'com.google.android.gms:play-services-ads:10.0.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile "com.daimajia.swipelayout:library:1.2.0@aar"
     testCompile 'junit:junit:4.12'
 }

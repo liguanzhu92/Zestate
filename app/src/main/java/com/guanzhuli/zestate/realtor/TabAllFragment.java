@@ -27,10 +27,10 @@ public class TabAllFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab_all, container, false);
-        TextView textView = (TextView)view.findViewById(R.id.tab_all_textview);
+/*        TextView textView = (TextView)view.findViewById(R.id.tab_all_textview);
         Typeface custom_font = Typeface.createFromAsset(getContext().getAssets(),  "fonts/CaviarDreams.ttf");
 
-        textView.setTypeface(custom_font);
+        textView.setTypeface(custom_font);*/
         return view;
     }
 
