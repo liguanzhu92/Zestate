@@ -2,12 +2,12 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.guanzhuli.zestate.realtor.TabPostFragment">
+             tools:context="com.guanzhuli.zestate.realtor.fragment.TabPostFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_tab_post"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="tab post fragment"/>
+            android:layout_height="match_parent"/>
 
 </FrameLayout>

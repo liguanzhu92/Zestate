@@ -1,4 +1,4 @@
-package com.guanzhuli.zestate.realtor;
+package com.guanzhuli.zestate.realtor.fragment;
 
 
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.daimajia.swipe.util.Attributes;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -5,7 +5,7 @@
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              tools:context=".realtor.SellerFragment">
+              tools:context=".realtor.fragment.SellerFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
@@ -91,7 +91,7 @@
                     android:id="@+id/seller_signup_confirm"
                     android:text="Confirm Account"
                     android:textColor="@color/button_text_color"
-                    android:backgroundTint="@color/colorPrimary"
+                    android:background="@drawable/button_selector_solid"
                     android:layout_width="match_parent" android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>

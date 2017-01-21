@@ -1,4 +1,4 @@
-package com.guanzhuli.zestate.realtor;
+package com.guanzhuli.zestate.realtor.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,7 @@ import com.guanzhuli.zestate.R;
 /**
  * Created by Guanzhu Li on 1/21/2017.
  */
-public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder> {
+public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder> implements View.OnClickListener {
 
     private Context mContext;
 
@@ -41,6 +41,11 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder> 
     @Override
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipelist_property_seller;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
 class SwipeSellerHolder extends RecyclerView.ViewHolder {

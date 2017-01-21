@@ -1,4 +1,4 @@
-package com.guanzhuli.zestate.realtor;
+package com.guanzhuli.zestate.realtor.fragment;
 
 
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import com.guanzhuli.zestate.R;
-import com.guanzhuli.zestate.SellerActivity;
+import com.guanzhuli.zestate.realtor.SellerActivity;
 
 /**
  * A simple {@link Fragment} subclass.

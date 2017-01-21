@@ -1,4 +1,4 @@
-package com.guanzhuli.zestate.realtor;
+package com.guanzhuli.zestate.realtor.fragment;
 
 
 import android.os.Bundle;

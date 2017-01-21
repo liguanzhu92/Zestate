@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.guanzhuli.zestate.buyer.BuyerFragment;
-import com.guanzhuli.zestate.realtor.SellerFragment;
+import com.guanzhuli.zestate.realtor.fragment.SellerFragment;
 
 public class RegisterActivity extends AppCompatActivity {
 

@@ -24,7 +24,7 @@
                 android:label="@string/title_activity_register"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".SellerActivity">
+        <activity android:name=".realtor.SellerActivity">
         </activity>
     </application>
 
