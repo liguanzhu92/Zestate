@@ -2,21 +2,24 @@ package com.guanzhuli.zestate;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
-import android.widget.VideoView;
+
+import java.io.IOException;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashActivity extends AppCompatActivity {
-    private VideoView mVideoView;
+   /* private VideoView mVideoView;*/
+   private SurfaceView mSurfaceView;
+    private SurfaceHolder mSurfaceHolder;
+    private MediaPlayer mMediaPlayer;
     private View mControlsView;
     private Button mButtonSignIn, mButtonSignUp;
     private AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
@@ -32,17 +35,38 @@ public class SplashActivity extends AppCompatActivity {
         mControlsView.startAnimation(fadeIn);
         fadeIn.setDuration(5000);
         fadeIn.setFillAfter(true);
-        mVideoView = (VideoView) findViewById(R.id.fullscreen_content);
-        mVideoView.setVideoPath("android.resource://com.guanzhuli.zestate/raw/" + R.raw.splash);
-        // video.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        mSurfaceView = (SurfaceView) findViewById(R.id.fullscreen_content);
+        mSurfaceHolder = mSurfaceView.getHolder();
+        mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.setLooping(true);
+            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                mMediaPlayer = new MediaPlayer();
+                mMediaPlayer.setDisplay(mSurfaceHolder);
+                try {
+                    mMediaPlayer.setDataSource(SplashActivity.this, Uri.parse("android.resource://com.guanzhuli.zestate/raw/" + R.raw.splash));
+                    mMediaPlayer.prepare();
+                    mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer) {
+                            mMediaPlayer.setLooping(true);
+                        }
+                    });
+                    mMediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
             }
         });
-        mVideoView.start();
-
         mButtonSignUp = (Button) findViewById(R.id.splash_sign_up_button);
         mButtonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +83,22 @@ public class SplashActivity extends AppCompatActivity {
         // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mVideoView.stopPlayback();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 }

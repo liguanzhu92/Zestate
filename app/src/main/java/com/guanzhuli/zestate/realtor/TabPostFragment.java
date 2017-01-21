@@ -1,4 +1,4 @@
-package com.guanzhuli.zestate.buyer;
+package com.guanzhuli.zestate.realtor;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.guanzhuli.zestate.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BuyerFragment extends Fragment {
+public class TabPostFragment extends Fragment {
 
 
-    public BuyerFragment() {
+    public TabPostFragment() {
         // Required empty public constructor
     }
 
@@ -24,8 +24,7 @@ public class BuyerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_buyer, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_tab_post, container, false);
     }
 
 }
