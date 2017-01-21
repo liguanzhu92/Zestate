@@ -91,7 +91,7 @@
                     android:id="@+id/seller_signup_confirm"
                     android:text="Confirm Account"
                     android:textColor="@color/button_text_color"
-                    android:background="@drawable/button_selector_solid"
+                    android:backgroundTint="@color/colorPrimary"
                     android:layout_width="match_parent" android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>

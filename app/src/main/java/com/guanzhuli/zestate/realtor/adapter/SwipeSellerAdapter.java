@@ -2,6 +2,7 @@ package com.guanzhuli.zestate.realtor.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,23 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder> 
         return R.id.swipelist_property_seller;
     }
 
+    public interface OnSwipeClickListener {
+        void onItemClick(View view , String data);
+    }
+
+    private OnSwipeClickListener mOnItemClickListener = null;
+
+    public void setOnItemClickListener(OnSwipeClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
     @Override
     public void onClick(View view) {
-
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(view,String.valueOf(view.getTag()));
+        }
+        else{
+            Log.e("CLICK", "ERROR");
+        }
     }
 }
 class SwipeSellerHolder extends RecyclerView.ViewHolder {
