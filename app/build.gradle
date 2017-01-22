@@ -34,6 +34,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     testCompile 'junit:junit:4.12'
 }

@@ -5,13 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Toast;
 import com.daimajia.swipe.util.Attributes;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
+import com.guanzhuli.zestate.realtor.util.RecyclerItemClickListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +25,7 @@ import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
 public class TabAllFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SwipeSellerAdapter mAdapter;
+    private ArrayList<Property> mPropertyArrayList;
 
     public TabAllFragment() {
         // Required empty public constructor
@@ -35,6 +42,12 @@ public class TabAllFragment extends Fragment {
 
         textView.setTypeface(custom_font);*/
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_tab_all);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.d("allTab", String.valueOf(position));
+            }
+        }));
         mAdapter = new SwipeSellerAdapter(getContext());
         ((SwipeSellerAdapter) mAdapter).setMode(Attributes.Mode.Single);
         mRecyclerView.setAdapter(mAdapter);
