@@ -56,6 +56,27 @@
                         android:layout_height="wrap_content"
                         android:hint="Password" android:inputType="textPassword"/>
             </android.support.design.widget.TextInputLayout>
+            <RadioGroup
+                    android:id="@+id/splash_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <RadioButton
+                            android:id="@+id/splash_sign_in_buyer"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="buyer"
+                            android:checked="true" />
+
+                    <RadioButton
+                            android:id="@+id/splash_sign_in_seller"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="seller" />
+
+            </RadioGroup>
             <LinearLayout
                     android:paddingTop="8dp"
                     android:orientation="horizontal"

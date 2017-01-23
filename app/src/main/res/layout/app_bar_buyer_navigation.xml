@@ -7,8 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.guanzhuli.zestate.buyer.BuyerNavigation">
 
-    <include layout="@layout/content_buyer_navigation" />
-
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:id="@+id/bootomNavigation"
@@ -19,5 +17,6 @@
         app:itemTextColor="@color/white_overlay"
         app:menu="@menu/bottom_menu">
     </android.support.design.widget.BottomNavigationView>
+    <include layout="@layout/content_buyer_navigation" />
 
 </android.support.design.widget.CoordinatorLayout>
