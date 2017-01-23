@@ -1,5 +1,7 @@
 package com.guanzhuli.zestate.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by Guanzhu Li on 1/21/2017.
  */
@@ -7,15 +9,15 @@ public class Property {
     private String mId;
     private String mName;
     private String mType;
-    private int mCategory;
+    private String mCategory;
     private String mAddress1;
     private String mAddress2;
     private int mZip;
     private String mImage1;
     private String mImage2;
     private String mImage3;
-    private String mLatitude;
-    private String mLongitude;
+    private Double mLatitude;
+    private Double mLongitude;
     private String mCost;
     private String mSize;
     private String mDescription;
@@ -23,6 +25,15 @@ public class Property {
     private String mModifyDate;
     private String mStatus;
     private String mUserId;
+    private ArrayList<Property> mPropertyList = new ArrayList<>();
+
+    public ArrayList<Property> getmPropertyList() {
+        return mPropertyList;
+    }
+
+    public void setmPropertyList(ArrayList<Property> mPropertyList) {
+        this.mPropertyList = mPropertyList;
+    }
 
     public String getId() {
         return mId;
@@ -48,14 +59,13 @@ public class Property {
         mType = type;
     }
 
-    public int getCategory() {
+    public String getmCategory() {
         return mCategory;
     }
 
-    public void setCategory(int category) {
-        mCategory = category;
+    public void setmCategory(String mCategory) {
+        this.mCategory = mCategory;
     }
-
     public String getAddress1() {
         return mAddress1;
     }
@@ -104,20 +114,20 @@ public class Property {
         mImage3 = image3;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return mLatitude;
     }
 
-    public void setLatitude(String latitude) {
-        mLatitude = latitude;
+    public void setLatitude(Double mLatitude) {
+        this.mLatitude = mLatitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return mLongitude;
     }
 
-    public void setLongitude(String longitude) {
-        mLongitude = longitude;
+    public void setLongitude(Double mLongitude) {
+        this.mLongitude = mLongitude;
     }
 
     public String getCost() {

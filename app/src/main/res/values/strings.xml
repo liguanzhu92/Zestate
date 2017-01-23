@@ -9,4 +9,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="google_api_client_key">AIzaSyBNfKt5k0HQPH0mIedm0KZP8jux-JNQOCE</string>
+    <string name="title_activity_buyer_navigation">BuyerNavigation</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="bottom_nav_viewType">List</string>
+    <string name="bottom_nav_filter">filter</string>
 </resources>

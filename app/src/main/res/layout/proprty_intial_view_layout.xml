@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/property_Image1_view" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:id="@+id/property_price"
+        android:text="$8000"
+        android:layout_marginStart="45dp"
+        android:layout_marginBottom="43dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/property_type"
+        android:text="Apartment"
+        android:layout_above="@+id/property_price"
+        android:layout_alignStart="@+id/property_price" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="900 Sq.ft"
+        android:id="@+id/property_size"
+        android:layout_marginLeft="5dp"
+        android:layout_alignBottom="@+id/property_price"
+        android:layout_toEndOf="@+id/property_price" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="my Home"
+        android:id="@+id/property_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
+</RelativeLayout>

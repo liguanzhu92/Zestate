@@ -5,11 +5,15 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 
+import com.guanzhuli.zestate.buyer.BuyerNavigation;
+
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -30,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-        getSupportActionBar().hide();
+       // getSupportActionBar().hide();
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mControlsView.startAnimation(fadeIn);
         fadeIn.setDuration(5000);
@@ -72,6 +76,14 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+            }
+        });
+
+        mButtonSignIn = (Button) findViewById(R.id.splash_sign_in_button);
+        mButtonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SplashActivity.this,BuyerNavigation.class));
             }
         });
 
