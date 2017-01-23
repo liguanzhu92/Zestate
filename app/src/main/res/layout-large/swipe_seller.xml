@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <com.daimajia.swipe.SwipeLayout
+            android:id="@+id/swipelist_property_seller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:tag="Bottom3">
+            <ImageView
+                    android:tint="@color/button_text_color"
+                    android:clickable="true"
+                    android:background="@color/colorPrimaryLight"
+                    android:id="@+id/swipe_edit_property"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_edit"
+                    android:layout_width="27dp"
+                    android:scaleType="centerInside"
+                    android:layout_height="match_parent"/>
+
+            <ImageView
+                    android:clickable="true"
+                    android:id="@+id/swipe_delete_property"
+                    android:layout_width="27dp"
+                    android:scaleType="centerInside"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_trash" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="5dp"
+                android:padding="10dp">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Name:"
+                        android:layout_weight="1.2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22dp"
+                        android:id="@+id/swipe_name"
+                        android:text="Property Name"
+                        android:layout_weight="4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Type:"
+                        android:layout_weight="1.2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22dp"
+                        android:id="@+id/swipe_type"
+                        android:text="Property Type"
+                        android:layout_weight="4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:tag="Hover"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Category:"
+                        android:layout_weight="1.2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22dp"
+                        android:id="@+id/swipe_cate"
+                        android:layout_weight="4"
+                        android:text="Property Category"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Address:"
+                        android:layout_weight="1.2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22dp"
+                        android:id="@+id/swipe_addr"
+                        android:layout_weight="4"
+                        android:text="Property address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.daimajia.swipe.SwipeLayout>
+</LinearLayout>
