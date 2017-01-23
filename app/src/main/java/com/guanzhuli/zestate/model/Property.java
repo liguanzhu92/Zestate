@@ -10,6 +10,7 @@ public class Property {
     private int mCategory;
     private String mAddress1;
     private String mAddress2;
+    private String mAddress;
     private int mZip;
     private String mImage1;
     private String mImage2;
@@ -174,6 +175,14 @@ public class Property {
 
     public void setUserId(String userId) {
         mUserId = userId;
+    }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(String address) {
+        mAddress = address;
     }
 
 

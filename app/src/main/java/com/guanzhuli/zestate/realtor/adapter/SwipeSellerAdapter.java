@@ -41,7 +41,7 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
     @Override
     public void onBindViewHolder(SwipeSellerHolder viewHolder, final int position) {
         viewHolder.mTextName.setText(mList.get(position).getName());
-        viewHolder.mTextType.setText(mList.get(position).getType());
+        viewHolder.mTextCost.setText(mList.get(position).getCost());
         viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getCategory()));
         viewHolder.mTextAddress.setText(mList.get(position).getAddress1()
                 + mList.get(position).getAddress2());
@@ -78,13 +78,13 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
 
 class SwipeSellerHolder extends RecyclerView.ViewHolder {
     SwipeLayout mSwipeLayout;
-    TextView mTextName, mTextType, mTextCategory, mTextAddress;
+    TextView mTextName, mTextCost, mTextCategory, mTextAddress;
     ImageView mImageEdit, mImageDelete;
     public SwipeSellerHolder(View itemView) {
         super(itemView);
         mSwipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipelist_property_seller);
         mTextName = (TextView) itemView.findViewById(R.id.swipe_name);
-        mTextType = (TextView) itemView.findViewById(R.id.swipe_type);
+        mTextCost = (TextView) itemView.findViewById(R.id.swipe_cost);
         mTextCategory = (TextView) itemView.findViewById(R.id.swipe_cate);
         mTextAddress = (TextView) itemView.findViewById(R.id.swipe_addr);
         mImageEdit = (ImageView) itemView.findViewById(R.id.swipe_edit_property);

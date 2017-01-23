@@ -42,77 +42,45 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
-                <TextView
-                        android:textSize="22dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="Name:"
-                        android:layout_weight="1.2"
-                        android:layout_width="0dp" android:layout_height="wrap_content"/>
-                <TextView
-                        android:textSize="22dp"
-                        android:id="@+id/swipe_name"
-                        android:text="Property Name"
-                        android:layout_weight="4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
-
+                <ImageView android:layout_width="0dp"
+                           android:layout_marginRight="@dimen/activity_horizontal_margin"
+                           android:src="@mipmap/house_sample"
+                           android:scaleType="fitCenter"
+                           android:layout_weight="1"
+                           android:layout_height="match_parent"/>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_weight="5"
+                              android:orientation="vertical"
+                              android:layout_height="wrap_content">
+                    <TextView
+                            android:textSize="22dp"
+                            android:id="@+id/swipe_name"
+                            android:text="Property Name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    <TextView
+                            android:textSize="22dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:id="@+id/swipe_cost"
+                            android:text="Property Cost"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:tag="Hover"/>
+                    <TextView
+                            android:textSize="22dp"
+                            android:id="@+id/swipe_addr"
+                            android:text="Property address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    <TextView
+                            android:textSize="22dp"
+                            android:id="@+id/swipe_cate"
+                            android:text="Property Category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
-                <TextView
-                        android:textSize="22dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="Type:"
-                        android:layout_weight="1.2"
-                        android:layout_width="0dp" android:layout_height="wrap_content"/>
-                <TextView
-                        android:textSize="22dp"
-                        android:id="@+id/swipe_type"
-                        android:text="Property Type"
-                        android:layout_weight="4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:tag="Hover"/>
-
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
-                <TextView
-                        android:textSize="22dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="Category:"
-                        android:layout_weight="1.2"
-                        android:layout_width="0dp" android:layout_height="wrap_content"/>
-                <TextView
-                        android:textSize="22dp"
-                        android:id="@+id/swipe_cate"
-                        android:layout_weight="4"
-                        android:text="Property Category"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
-
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent" android:layout_height="wrap_content">
-                <TextView
-                        android:textSize="22dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="Address:"
-                        android:layout_weight="1.2"
-                        android:layout_width="0dp" android:layout_height="wrap_content"/>
-                <TextView
-                        android:textSize="22dp"
-                        android:id="@+id/swipe_addr"
-                        android:layout_weight="4"
-                        android:text="Property address"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </com.daimajia.swipe.SwipeLayout>
