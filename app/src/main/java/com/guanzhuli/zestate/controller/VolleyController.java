@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.guanzhuli.zestate.model.Property;
+import com.guanzhuli.zestate.model.UserLocation;
 
 /**
  * Created by Guanzhu Li on 1/13/2017.
@@ -17,6 +19,8 @@ public class VolleyController extends Application {
     private RequestQueue mRequestQueue;
 
     private static VolleyController mInstance;
+    private static Property mProperty;
+    private static UserLocation mUserLocation;
 
     @Override
     public void onCreate() {
@@ -52,5 +56,19 @@ public class VolleyController extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
+    }
+
+    public Property getmProperty(){
+        if(mProperty == null)
+            mProperty = new Property();
+
+        return mProperty;
+    }
+
+    public UserLocation getUserLocation(){
+        if(mUserLocation == null){
+            mUserLocation = new UserLocation();
+        }
+        return mUserLocation;
     }
 }

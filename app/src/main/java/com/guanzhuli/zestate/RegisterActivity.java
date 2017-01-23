@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.guanzhuli.zestate.buyer.BuyerFragment;
+import com.guanzhuli.zestate.buyer.fragments.BuyerFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerFragment;
 
 public class RegisterActivity extends AppCompatActivity {
