@@ -43,11 +43,13 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
+                        android:textSize="22dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:text="Name:"
                         android:layout_weight="1.2"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:textSize="22dp"
                         android:id="@+id/swipe_name"
                         android:text="Property Name"
                         android:layout_weight="4"
@@ -59,11 +61,13 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
+                        android:textSize="22dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:text="Type:"
                         android:layout_weight="1.2"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:textSize="22dp"
                         android:id="@+id/swipe_type"
                         android:text="Property Type"
                         android:layout_weight="4"
@@ -76,11 +80,13 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
+                        android:textSize="22dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:text="Category:"
                         android:layout_weight="1.2"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:textSize="22dp"
                         android:id="@+id/swipe_cate"
                         android:layout_weight="4"
                         android:text="Property Category"
@@ -92,11 +98,13 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
+                        android:textSize="22dp"
                         android:textColor="@color/colorPrimaryDark"
                         android:text="Address:"
                         android:layout_weight="1.2"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:textSize="22dp"
                         android:id="@+id/swipe_addr"
                         android:layout_weight="4"
                         android:text="Property address"

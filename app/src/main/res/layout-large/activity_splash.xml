@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.guanzhuli.zestate.SplashActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <SurfaceView android:id="@+id/fullscreen_content"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:keepScreenOn="true"
+               android:gravity="center"/>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:fitsSystemWindows="true">
+
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+                      style="?metaButtonBarStyle"
+                      android:padding="@dimen/general_padding"
+                      android:layout_width="300dp"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center"
+                      android:background="@color/white_overlay"
+                      android:orientation="vertical"
+                      tools:ignore="UselessParent">
+            <ImageView
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="32dp"
+                    android:paddingRight="32dp"
+                    android:src="@drawable/logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"/>
+            <android.support.design.widget.TextInputLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <EditText
+                        android:textSize="22sp"
+                        android:id="@+id/sign_in_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mobile"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <EditText
+                        android:textSize="22sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password" android:inputType="textPassword"/>
+            </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                    android:paddingTop="8dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button
+                        android:id="@+id/splash_sign_in_button"
+                        android:text="Sign In"
+                        android:textColor="@color/button_text_color"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:layout_weight="1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <Button
+                        android:id="@+id/splash_sign_up_button"
+                        android:text="Sign Up"
+                        android:textColor="@color/button_text_color"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:layout_weight="1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

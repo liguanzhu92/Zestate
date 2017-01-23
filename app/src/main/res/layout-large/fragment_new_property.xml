@@ -1,0 +1,251 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              tools:context="com.guanzhuli.zestate.realtor.fragment.NewPropertyFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+                android:id="@+id/new_property_location"
+                android:padding="@dimen/general_padding"
+                android:clickable="true"
+                android:src="@drawable/ic_location"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView
+                android:textSize="22sp"
+                android:id="@+id/new_property_address"
+                android:layout_gravity="center_vertical"
+                android:text="1840 Wessel Ct, St Charles, IL, 60174"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <View
+            android:layout_marginTop="@dimen/general_padding"
+            android:layout_marginBottom="@dimen/general_padding"
+            android:background="@android:color/darker_gray"
+            android:layout_width="match_parent" android:layout_height="1dp"/>
+    <android.support.v4.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Name:"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <EditText
+                        android:textSize="22sp"
+                        android:id="@+id/new_property_name"
+                        android:hint="Name"
+                        android:layout_weight="5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Type:"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <EditText
+                        android:textSize="22sp"
+                        android:id="@+id/new_property_type"
+                        android:hint="type"
+                        android:layout_weight="5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Category:"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <EditText
+                        android:textSize="22sp"
+                        android:hint="change to radio box"
+                        android:layout_weight="5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Cost:"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <EditText
+                        android:textSize="22sp"
+                        android:id="@+id/new_property_cost"
+                        android:hint="cost"
+                        android:layout_weight="5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Size:"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <EditText
+                        android:textSize="22sp"
+                        android:id="@+id/new_property_size"
+                        android:hint="size"
+                        android:layout_weight="5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="22sp"
+                        android:gravity="top"
+                        android:text="Description:"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <EditText
+                        android:textSize="22sp"
+                        android:id="@+id/new_property_description"
+                        android:gravity="top|left"
+                        android:inputType="textMultiLine"
+                        android:maxLines="10"
+                        android:lines="4"
+                        android:hint="description"
+                        android:layout_weight="5"
+                        android:scrollbars="vertical"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:padding="@dimen/general_padding"
+                        android:clickable="true"
+                        android:src="@drawable/ic_image"
+                        android:layout_weight="1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22sp"
+                        android:id="@+id/new_image_name1"
+                        android:layout_gravity="center_vertical"
+                        android:text="imagename1"
+                        android:layout_weight="4"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22sp"
+                        android:clickable="true"
+                        android:id="@+id/new_image_upload1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="upload"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:padding="@dimen/general_padding"
+                        android:clickable="true"
+                        android:src="@drawable/ic_image"
+                        android:layout_weight="1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="imagename2"
+                        android:layout_weight="4"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22sp"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="upload"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:padding="@dimen/general_padding"
+                        android:clickable="true"
+                        android:src="@drawable/ic_image"
+                        android:layout_weight="1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="imagename3"
+                        android:layout_weight="4"
+                        android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:textSize="22sp"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="upload"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:layout_width="0dp"
+                        android:textSize="20sp"
+                        android:id="@+id/new_property_post"
+                        android:layout_weight="1"
+                        android:textColor="@color/button_text_color"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:text="Post"
+                        android:layout_height="wrap_content"/>
+                <Button android:layout_width="0dp"
+                        android:textSize="20sp"
+                        android:id="@+id/new_property_draft"
+                        android:layout_weight="1"
+                        android:textColor="@color/button_text_color"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:text="Draft"
+                        android:layout_height="wrap_content"/>
+                <Button android:layout_width="0dp"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        android:id="@+id/new_property_discard"
+                        android:textColor="@color/button_text_color"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:text="Discard"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
