@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.daimajia.swipe.util.Attributes;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.model.Property;
+import com.guanzhuli.zestate.model.PropertyList;
 import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
 import com.guanzhuli.zestate.realtor.util.RecyclerItemClickListener;
 
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class TabAllFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SwipeSellerAdapter mAdapter;
-    private ArrayList<Property> mPropertyArrayList;
+    private PropertyList mProperties = PropertyList.getInstance();
 
     public TabAllFragment() {
         // Required empty public constructor
@@ -48,7 +49,7 @@ public class TabAllFragment extends Fragment {
                 Log.d("allTab", String.valueOf(position));
             }
         }));
-        mAdapter = new SwipeSellerAdapter(getContext());
+        mAdapter = new SwipeSellerAdapter(getContext(), mProperties);
         ((SwipeSellerAdapter) mAdapter).setMode(Attributes.Mode.Single);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

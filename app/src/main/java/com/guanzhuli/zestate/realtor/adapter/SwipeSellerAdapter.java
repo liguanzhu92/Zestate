@@ -3,6 +3,7 @@ package com.guanzhuli.zestate.realtor.adapter;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,18 +15,23 @@ import android.widget.Toast;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.model.Property;
+import com.guanzhuli.zestate.model.PropertyList;
 import com.guanzhuli.zestate.realtor.SellerActivity;
 import com.guanzhuli.zestate.realtor.fragment.PropertyDetailFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerHomeFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by Guanzhu Li on 1/21/2017.
  */
 public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
-
     private Context mContext;
+    private ArrayList<Property> mList;
 
-    public SwipeSellerAdapter(Context context) {
+    public SwipeSellerAdapter(Context context, ArrayList<Property> obj) {
+        mList = obj;
         mContext = context;
     }
 
@@ -37,14 +43,20 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
     }
 
     @Override
-    public void onBindViewHolder(SwipeSellerHolder viewHolder, int position) {
-        viewHolder.mTextName.isInEditMode();
-        viewHolder.mTextName.getEditableText();
+    public void onBindViewHolder(SwipeSellerHolder viewHolder, final int position) {
+        viewHolder.mTextName.setText(mList.get(position).getName());
+        viewHolder.mTextType.setText(mList.get(position).getType());
+        viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getCategory()));
+        viewHolder.mTextAddress.setText(mList.get(position).getAddress1()
+                + mList.get(position).getAddress2());
         viewHolder.mSwipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
                 Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
                 PropertyDetailFragment propertyDetailFragment = new PropertyDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", position);
+                propertyDetailFragment.setArguments(bundle);
                 ((SellerActivity) mContext).getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
@@ -57,7 +69,7 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mList.size();
     }
 
     @Override

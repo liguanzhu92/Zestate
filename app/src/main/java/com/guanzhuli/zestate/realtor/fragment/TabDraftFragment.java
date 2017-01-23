@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 
 import com.daimajia.swipe.util.Attributes;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +22,7 @@ import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
 public class TabDraftFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SwipeSellerAdapter mAdapter;
+    private ArrayList<Property> mList = new ArrayList<>();
 
     public TabDraftFragment() {
         // Required empty public constructor
@@ -31,7 +35,7 @@ public class TabDraftFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab_draft, container, false);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_tab_draft);
-        mAdapter = new SwipeSellerAdapter(getContext());
+        mAdapter = new SwipeSellerAdapter(getContext(), mList);
         ((SwipeSellerAdapter) mAdapter).setMode(Attributes.Mode.Single);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

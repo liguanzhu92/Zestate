@@ -17,6 +17,7 @@
                 android:src="@drawable/ic_location"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <TextView
+                android:id="@+id/new_property_address"
                 android:layout_gravity="center_vertical"
                 android:text="1840 Wessel Ct, St Charles, IL, 60174"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
@@ -40,6 +41,7 @@
                         android:layout_weight="1.5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <EditText
+                        android:id="@+id/new_property_name"
                         android:hint="Name"
                         android:layout_weight="5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
@@ -54,6 +56,7 @@
                         android:layout_weight="1.5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <EditText
+                        android:id="@+id/new_property_type"
                         android:hint="type"
                         android:layout_weight="5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
@@ -82,6 +85,7 @@
                         android:layout_weight="1.5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <EditText
+                        android:id="@+id/new_property_cost"
                         android:hint="cost"
                         android:layout_weight="5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
@@ -96,6 +100,7 @@
                         android:layout_weight="1.5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <EditText
+                        android:id="@+id/new_property_size"
                         android:hint="size"
                         android:layout_weight="5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
@@ -110,6 +115,7 @@
                         android:layout_weight="1.5"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <EditText
+                        android:id="@+id/new_property_description"
                         android:gravity="top|left"
                         android:inputType="textMultiLine"
                         android:maxLines="10"
@@ -130,11 +136,14 @@
                         android:layout_weight="1"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/new_image_name1"
                         android:layout_gravity="center_vertical"
-                        android:text="imagename1y"
+                        android:text="imagename1"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:clickable="true"
+                        android:id="@+id/new_image_upload1"
                         android:layout_gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -157,6 +166,7 @@
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:clickable="true"
                         android:layout_gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -179,6 +189,7 @@
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:clickable="true"
                         android:layout_gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -189,12 +200,14 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <Button android:layout_width="0dp"
+                        android:id="@+id/new_property_post"
                         android:layout_weight="1"
                         android:textColor="@color/button_text_color"
                         android:backgroundTint="@color/colorPrimary"
                         android:text="Post"
                         android:layout_height="wrap_content"/>
                 <Button android:layout_width="0dp"
+                        android:id="@+id/new_property_draft"
                         android:layout_weight="1"
                         android:textColor="@color/button_text_color"
                         android:backgroundTint="@color/colorPrimary"
@@ -202,6 +215,7 @@
                         android:layout_height="wrap_content"/>
                 <Button android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:id="@+id/new_property_discard"
                         android:textColor="@color/button_text_color"
                         android:backgroundTint="@color/colorPrimary"
                         android:text="Discard"
