@@ -50,7 +50,7 @@ public class PropertyDetailFragment extends Fragment {
         mTextAddress.setText(mProperties.get(position).getAddress1() + mProperties.get(position).getAddress2() );
         mTextName.setText(mProperties.get(position).getName());
         mTextType.setText(mProperties.get(position).getType());
-        mTextCategory.setText(String.valueOf(mProperties.get(position).getCategory()));
+        mTextCategory.setText(String.valueOf(mProperties.get(position).getmCategory()));
         mTextCost.setText(mProperties.get(position).getCost());
         mTextSize.setText(mProperties.get(position).getSize());
         mTextDescription.setText(mProperties.get(position).getDescription());

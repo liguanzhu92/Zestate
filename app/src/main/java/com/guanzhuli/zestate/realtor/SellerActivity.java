@@ -49,15 +49,15 @@ public class SellerActivity extends AppCompatActivity {
                         property.setId(person.getString("Property Id"));
                         property.setName(person.getString("Property Name"));
                         property.setType(person.getString("Property Type"));
-                        property.setCategory(Integer.parseInt(person.getString("Property Category")));
+                        property.setmCategory(person.getString("Property Category"));
                         property.setAddress1(person.getString("Property Address1"));
                         property.setAddress2(person.getString("Property Address2"));
                         property.setZip(Integer.parseInt(person.getString("Property Zip")));
                         property.setImage1(person.getString("Property Image 1"));
                         property.setImage2(person.getString("Property Image 2"));
                         property.setImage3(person.getString("Property Image 3"));
-                        property.setLatitude(person.getString("Property Latitude"));
-                        property.setLongitude(person.getString("Property Longitude"));
+                        property.setLatitude(Double.parseDouble(person.getString("Property Latitude")));
+                        property.setLongitude(Double.parseDouble(person.getString("Property Longitude")));
                         property.setCost(person.getString("Property Cost"));
                         property.setSize(person.getString("Property Size"));
                         property.setDescription(person.getString("Property Desc"));
