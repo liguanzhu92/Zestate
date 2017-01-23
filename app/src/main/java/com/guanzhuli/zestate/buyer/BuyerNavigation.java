@@ -407,10 +407,14 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         LatLngBounds bounds = builder.build();
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 10);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("map", "permission error");
             return;
         }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        currentLocation = new LatLng(location.getLatitude(),location.getLongitude());
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,12));
+
+        if(location!=null)
+            currentLocation = new LatLng(location.getLatitude(),location.getLongitude());
+
+        //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,12));
     }
 }

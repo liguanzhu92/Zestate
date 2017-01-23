@@ -45,23 +45,7 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
         viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getmCategory()));
         viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getmCategory()));
         viewHolder.mTextAddress.setText(mList.get(position).getAddress1()
-                + mList.get(position).getAddress2());
-        viewHolder.mSwipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-            @Override
-            public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
-                PropertyDetailFragment propertyDetailFragment = new PropertyDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("DetailPosition", position);
-                propertyDetailFragment.setArguments(bundle);
-                ((SellerActivity) mContext).getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
-                        .replace(R.id.seller_activity_container, propertyDetailFragment)
-                        .addToBackStack(SellerHomeFragment.class.getName())
-                        .commit();
-            }
-        });
+                + " " +mList.get(position).getAddress2());
     }
 
     @Override

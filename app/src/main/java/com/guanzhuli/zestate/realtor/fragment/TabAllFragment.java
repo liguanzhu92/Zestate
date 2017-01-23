@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Toast;
 import com.daimajia.swipe.util.Attributes;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.model.PostPropertyList;
+import com.guanzhuli.zestate.realtor.SellerActivity;
 import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
 import com.guanzhuli.zestate.realtor.util.RecyclerItemClickListener;
 
@@ -43,6 +45,17 @@ public class TabAllFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Log.d("allTab", String.valueOf(position));
+                Toast.makeText(getContext(), "nav to detail", Toast.LENGTH_SHORT).show();
+                PropertyDetailFragment propertyDetailFragment = new PropertyDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("DetailPosition", position);
+                propertyDetailFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                        .replace(R.id.seller_activity_container, propertyDetailFragment)
+                        .addToBackStack(SellerHomeFragment.class.getName())
+                        .commit();
             }
         }));
         mAdapter = new SwipeSellerAdapter(getContext(), mProperties);
