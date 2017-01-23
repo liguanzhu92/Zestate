@@ -10,15 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Toast;
 import com.daimajia.swipe.util.Attributes;
 import com.guanzhuli.zestate.R;
-import com.guanzhuli.zestate.model.Property;
-import com.guanzhuli.zestate.model.PropertyList;
+import com.guanzhuli.zestate.model.PostPropertyList;
 import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
 import com.guanzhuli.zestate.realtor.util.RecyclerItemClickListener;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +22,7 @@ import java.util.ArrayList;
 public class TabAllFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SwipeSellerAdapter mAdapter;
-    private PropertyList mProperties = PropertyList.getInstance();
+    private PostPropertyList mProperties = PostPropertyList.getInstance();
 
     public TabAllFragment() {
         // Required empty public constructor

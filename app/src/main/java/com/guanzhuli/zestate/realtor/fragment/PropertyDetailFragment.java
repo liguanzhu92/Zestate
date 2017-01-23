@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.guanzhuli.zestate.R;
-import com.guanzhuli.zestate.model.PropertyList;
+import com.guanzhuli.zestate.model.PostPropertyList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,9 +25,10 @@ public class PropertyDetailFragment extends Fragment {
     private ViewPager mPager;
     private DetailPagerAdapter mDetailPagerAdapter;
     private Button mButtonEdit, mButtonDelete;
+    private ImageView mImageLocation;
     private TextView mTextAddress,mTextName,mTextType, mTextCategory, mTextCost, mTextSize, mTextDescription;
     private int[] imageSrc = {R.drawable.house_sample1, R.drawable.house_sample2, R.drawable.house_sample3};
-    private PropertyList mProperties = PropertyList.getInstance();
+    private PostPropertyList mProperties = PostPropertyList.getInstance();
 
     public PropertyDetailFragment() {
         // Required empty public constructor
@@ -45,7 +46,7 @@ public class PropertyDetailFragment extends Fragment {
     }
 
     private void setContent() {
-        int position = getArguments().getInt("position");
+        final int position = getArguments().getInt("DetailPosition");
         mTextAddress.setText(mProperties.get(position).getAddress1() + mProperties.get(position).getAddress2() );
         mTextName.setText(mProperties.get(position).getName());
         mTextType.setText(mProperties.get(position).getType());
@@ -53,6 +54,32 @@ public class PropertyDetailFragment extends Fragment {
         mTextCost.setText(mProperties.get(position).getCost());
         mTextSize.setText(mProperties.get(position).getSize());
         mTextDescription.setText(mProperties.get(position).getDescription());
+        mButtonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewPropertyFragment newPropertyFragment = new NewPropertyFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("EditPosition", position);
+                newPropertyFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.seller_activity_container, newPropertyFragment)
+                        .addToBackStack(PropertyDetailFragment.class.getName())
+                        .commit();
+            }
+        });
+        mButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        mImageLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -67,18 +94,8 @@ public class PropertyDetailFragment extends Fragment {
         mTextSize = (TextView) mView.findViewById(R.id.seller_detail_size);
         mTextDescription = (TextView) mView.findViewById(R.id.seller_detail_description);
         mButtonEdit = (Button) mView.findViewById(R.id.seller_detail_button_edit);
-        mButtonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NewPropertyFragment newPropertyFragment = new NewPropertyFragment();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.seller_activity_container, newPropertyFragment)
-                        .addToBackStack(PropertyDetailFragment.class.getName())
-                        .commit();
-            }
-        });
         mButtonDelete = (Button) mView.findViewById(R.id.seller_detail_button_delete);
+        mImageLocation = (ImageView) mView.findViewById(R.id.seller_detail_location);
     }
 
     class DetailPagerAdapter extends PagerAdapter {

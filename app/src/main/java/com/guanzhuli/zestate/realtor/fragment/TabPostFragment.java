@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.daimajia.swipe.util.Attributes;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.model.PostPropertyList;
 import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.realtor.adapter.SwipeSellerAdapter;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class TabPostFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SwipeSellerAdapter mAdapter;
-    private ArrayList<Property> mList = new ArrayList<>();
+    private ArrayList<Property> mList = PostPropertyList.getInstance();
 
     public TabPostFragment() {
         // Required empty public constructor

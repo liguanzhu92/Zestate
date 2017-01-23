@@ -1,11 +1,8 @@
 package com.guanzhuli.zestate.realtor.adapter;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,6 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.model.Property;
-import com.guanzhuli.zestate.model.PropertyList;
 import com.guanzhuli.zestate.realtor.SellerActivity;
 import com.guanzhuli.zestate.realtor.fragment.PropertyDetailFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerHomeFragment;
@@ -55,7 +51,7 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
                 Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
                 PropertyDetailFragment propertyDetailFragment = new PropertyDetailFragment();
                 Bundle bundle = new Bundle();
-                bundle.putInt("position", position);
+                bundle.putInt("DetailPosition", position);
                 propertyDetailFragment.setArguments(bundle);
                 ((SellerActivity) mContext).getSupportFragmentManager()
                         .beginTransaction()

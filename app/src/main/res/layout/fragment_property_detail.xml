@@ -25,6 +25,8 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <ImageView
+                        android:clickable="true"
+                        android:id="@+id/seller_detail_location"
                         android:src="@drawable/ic_location"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"/>
                 <TextView
@@ -144,7 +146,7 @@
                         android:layout_height="match_parent"/>
                 <Button
                         android:text="Delete"
-                        android:id="@+id/seller_detail_button_"
+                        android:id="@+id/seller_detail_button_delete"
                         android:textColor="@color/button_text_color"
                         android:backgroundTint="@color/colorPrimary"
                         android:layout_width="0dp"

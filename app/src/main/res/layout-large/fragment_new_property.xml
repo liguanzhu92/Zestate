@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <ImageView
+                android:id="@+id/new_property_location"
                 android:padding="@dimen/general_padding"
                 android:clickable="true"
                 android:src="@drawable/ic_location"

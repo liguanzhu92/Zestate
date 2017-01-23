@@ -21,7 +21,10 @@
 
         <LinearLayout android:id="@+id/fullscreen_content_controls"
                       style="?metaButtonBarStyle"
-                      android:layout_width="wrap_content"
+                      android:paddingTop="@dimen/general_padding"
+                      android:paddingLeft="@dimen/general_padding"
+                      android:paddingRight="@dimen/general_padding"
+                      android:layout_width="220dp"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
                       android:background="@color/white_overlay"
@@ -34,30 +37,29 @@
                     android:paddingRight="32dp"
                     android:src="@drawable/logo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="88dp"/>
             <android.support.design.widget.TextInputLayout
-                    android:padding="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                 <EditText
+                        android:textSize="16sp"
                         android:id="@+id/sign_in_mobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Mobile"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
-                    android:padding="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                 <EditText
+                        android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password" android:inputType="textPassword"/>
             </android.support.design.widget.TextInputLayout>
             <LinearLayout
-                    android:paddingTop="8dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <Button
