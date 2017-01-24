@@ -1,0 +1,169 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_marginRight="@dimen/activity_horizontal_margin"
+              android:layout_marginLeft="@dimen/activity_horizontal_margin"
+              android:padding="@dimen/general_padding"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="com.guanzhuli.zestate.realtor.fragment.SellerProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:padding="@dimen/general_padding"
+            android:src="@drawable/logo"
+            android:scaleType="fitCenter"
+            android:layout_width="match_parent" android:layout_height="80dp"/>
+    <TextView
+            android:id="@+id/profile_logout"
+            android:background="@drawable/rec_outline"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/general_padding"
+            android:clickable="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="end"
+            android:text="Log Out"
+            android:textStyle="bold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <LinearLayout
+            android:padding="@dimen/general_padding"
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView
+                android:textColor="@color/colorPrimaryDark"
+                android:text="UserName:"
+                android:layout_weight="1"
+                android:layout_width="0dp" android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/profile_username"
+                android:text="Your Username"
+                android:layout_weight="4"
+                android:layout_width="0dp" android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+            android:padding="@dimen/general_padding"
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Mobile:"
+                android:layout_weight="1"
+                android:layout_width="0dp" android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/profile_mobile"
+                android:text="6143136377"
+                android:layout_weight="4"
+                android:layout_width="0dp" android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+            android:padding="@dimen/general_padding"
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Email:"
+                android:layout_weight="1"
+                android:layout_width="0dp" android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/profile_email"
+                android:text="liguanzhu@gmail.com"
+                android:layout_weight="4"
+                android:layout_width="0dp" android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <Button
+            android:id="@+id/profile_edit_button"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:textColor="@color/button_text_color"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_gravity="center"
+            android:text="Edit Profile"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <LinearLayout
+            android:id="@+id/seller_profile_linear"
+            android:orientation="vertical"
+            android:layout_width="match_parent" android:layout_height="match_parent">
+    <View
+            android:layout_marginTop="@dimen/general_padding"
+            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="@dimen/general_padding"
+            android:layout_width="match_parent" android:layout_height="1dp"/>
+        <LinearLayout
+                android:paddingBottom="@dimen/general_padding"
+                android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Username:"
+                    android:layout_weight="1"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+            <EditText
+                    android:id="@+id/profile_new_username"
+                    android:textSize="16sp"
+                    android:hint="Username"
+                    android:layout_weight="4"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+                android:paddingBottom="@dimen/general_padding"
+                android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Mobile:"
+                    android:layout_weight="1"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+            <EditText
+                    android:id="@+id/profile_new_mobile"
+                    android:textSize="16sp"
+                    android:hint="Mobile"
+                    android:layout_weight="4"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+                android:paddingBottom="@dimen/general_padding"
+                android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Email:"
+                    android:layout_weight="1"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+            <EditText
+                    android:id="@+id/profile_new_email"
+                    android:textSize="16sp"
+                    android:hint="Email"
+                    android:layout_weight="4"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+            <Button
+                    android:id="@+id/profile_save_button"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:textColor="@color/button_text_color"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center"
+                    android:text="Save"
+                    android:layout_weight="1"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/profile_discard_button"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:textColor="@color/button_text_color"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center"
+                    android:text="Discard"
+                    android:layout_weight="1"
+                    android:layout_width="0dp" android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

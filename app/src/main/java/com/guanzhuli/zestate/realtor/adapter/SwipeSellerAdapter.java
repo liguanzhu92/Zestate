@@ -2,6 +2,7 @@ package com.guanzhuli.zestate.realtor.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import android.widget.Toast;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.model.PostPropertyList;
 import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.realtor.SellerActivity;
+import com.guanzhuli.zestate.realtor.fragment.NewPropertyFragment;
 import com.guanzhuli.zestate.realtor.fragment.PropertyDetailFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerHomeFragment;
 
@@ -43,23 +46,43 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
         viewHolder.mTextName.setText(mList.get(position).getName());
         viewHolder.mTextCost.setText(mList.get(position).getCost());
         viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getmCategory()));
-        viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getmCategory()));
         viewHolder.mTextAddress.setText(mList.get(position).getAddress1()
-                + mList.get(position).getAddress2());
+                + " " +mList.get(position).getAddress2());
         viewHolder.mSwipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "nav to detail", Toast.LENGTH_SHORT).show();
                 PropertyDetailFragment propertyDetailFragment = new PropertyDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("DetailPosition", position);
                 propertyDetailFragment.setArguments(bundle);
-                ((SellerActivity) mContext).getSupportFragmentManager()
+                ((FragmentActivity)mContext).getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                         .replace(R.id.seller_activity_container, propertyDetailFragment)
                         .addToBackStack(SellerHomeFragment.class.getName())
                         .commit();
+            }
+        });
+        viewHolder.mImageEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewPropertyFragment newPropertyFragment = new NewPropertyFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("EditPosition", position);
+                newPropertyFragment.setArguments(bundle);
+                ((FragmentActivity)mContext).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.seller_activity_container, newPropertyFragment)
+                        .addToBackStack(PropertyDetailFragment.class.getName())
+                        .commit();
+            }
+        });
+        viewHolder.mImageDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PostPropertyList.getInstance().deleteData(mList.get(position).getId());
+                notifyDataSetChanged();
             }
         });
     }

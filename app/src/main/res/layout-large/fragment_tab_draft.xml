@@ -5,8 +5,13 @@
              tools:context="com.guanzhuli.zestate.realtor.fragment.TabDraftFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/tab_draft_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_tab_draft"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

@@ -10,7 +10,10 @@ import android.view.*;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import com.guanzhuli.zestate.buyer.BuyerNavigation;
+import com.guanzhuli.zestate.realtor.SellerActivity;
 
 import java.io.IOException;
 import java.util.Date;
@@ -24,6 +27,7 @@ public class SplashActivity extends AppCompatActivity {
    private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceHolder;
     private MediaPlayer mMediaPlayer;
+    private RadioGroup mRadioGroup;
     private View mControlsView;
     private Button mButtonSignIn, mButtonSignUp;
     private AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
@@ -71,6 +75,7 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+        mRadioGroup = (RadioGroup) findViewById(R.id.splash_radio);
         mButtonSignUp = (Button) findViewById(R.id.splash_sign_up_button);
         mButtonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +88,12 @@ public class SplashActivity extends AppCompatActivity {
         mButtonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SplashActivity.this,BuyerNavigation.class));
+                int selectedId = mRadioGroup.getCheckedRadioButtonId();
+                if (selectedId == R.id.splash_sign_in_buyer) {
+                    startActivity(new Intent(SplashActivity.this, BuyerNavigation.class));
+                } else {
+                    startActivity(new Intent(SplashActivity.this, SellerActivity.class));
+                }
             }
         });
 

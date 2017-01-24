@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".realtor.SellerActivity">
+    <item android:id="@+id/bottom_seller_list"
+          android:icon="@drawable/ic_location"
+          android:title="List"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/bottom_seller_add"
+          android:title="add"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/bottom_seller_profile"
+          android:title="Profile"
+          app:showAsAction="ifRoom"/>
+</menu>
