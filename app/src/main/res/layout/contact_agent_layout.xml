@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contact Agent"
+        android:textSize="20sp"/>
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/buyer_phone_to_conatct"
+        android:inputType="number"
+        app:met_iconLeft="@drawable/ic_mobile"
+        app:met_floatingLabel="normal"
+        android:hint="@string/phone_edit_text_hint"
+        app:met_maxCharacters="10"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_underlineColor="@color/colorPrimaryDark"
+        app:met_floatingLabelTextColor="@color/colorPrimaryDark"
+        style="@style/Widget.AppCompat.EditText"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:textSize="16sp"
+        android:id="@+id/buyer_email_to_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email_hint"
+        app:met_iconLeft="@drawable/ic_email"
+        app:met_floatingLabel="normal"
+        app:met_maxCharacters="50"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_underlineColor="@color/colorPrimaryDark"
+        app:met_floatingLabelTextColor="@color/colorPrimaryDark"/>
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:textSize="16sp"
+        android:id="@+id/agent_property_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Property Description"
+        app:met_floatingLabel="normal"
+        app:met_maxCharacters="50"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_underlineColor="@color/colorPrimaryDark"
+        app:met_floatingLabelTextColor="@color/colorPrimaryDark"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_selector"
+        android:textColor="@color/white_overlay"
+        android:textSize="18sp"
+        android:text="Contact Agent"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="16dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/white_overlay"
+                android:background="@drawable/button_selector"
+                android:text="Message"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white_overlay"
+                android:textSize="18sp"
+                android:background="@drawable/button_selector"
+                android:text="Call"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_selector"
+        android:textColor="@color/white_overlay"
+        android:textSize="18sp"
+        android:text="Schedule Appointment"/>
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -50,6 +51,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
+import com.guanzhuli.zestate.buyer.fragments.BuyerFragment;
+import com.guanzhuli.zestate.buyer.fragments.PropertyListView;
 import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.model.UserLocation;
@@ -110,7 +113,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
             mSlidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slideUpPanelLayout);
             mSlidingUpPanelLayout.setPanelHeight(0);
             //mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-            mSlidingUpPanelLayout.setCoveredFadeColor(0x80ffffff);
+            mSlidingUpPanelLayout.setCoveredFadeColor(0x0ffffff);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -147,10 +150,15 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         case R.id.bottom_filter:
                             break;
                         case R.id.bottom_view_type:
-                            if (item.getTitle().equals("List"))
+                            if (item.getTitle().equals("List")) {
                                 item.setTitle("Map");
-                            else
+                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                ft.replace(R.id.fragment_replaceble,new PropertyListView()).addToBackStack(null).commit();
+                            }
+                            else {
                                 item.setTitle("List");
+                                onBackPressed();
+                            }
                             break;
                     }
 
@@ -166,6 +174,9 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        }else if (mSlidingUpPanelLayout != null &&
+                (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+            mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
             super.onBackPressed();
         }
@@ -217,6 +228,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         markerIdHashMap = new HashMap<>();
+        pd.show();
         setLocation();
         getRealEstatedata();
         if (mGoogleMap != null) {
@@ -283,6 +295,8 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         property.setUserId(jsonProperty.getString("User Id"));
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        if(pd.isShowing())
+                            pd.dismiss();
                     }
                     mPropertyList.add(property);
                 }
@@ -294,6 +308,8 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                if(pd.isShowing())
+                    pd.dismiss();
                 Log.d(BuyerNavigation.class.getSimpleName(), volleyError.getMessage());
             }
         });
@@ -306,7 +322,6 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
     public void onConnected(Bundle bundle) {
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(15000);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -359,6 +374,8 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                 mCurrentMarker.remove();
             }
             //showMarkers(ll);
+            if(pd.isShowing())
+                pd.dismiss();
         }
     }
 
@@ -409,8 +426,12 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        Location location = VolleyController.getInstance().getUserLocation().getmCurrentLocation();
+        if(location == null)
+            location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        VolleyController.getInstance().getUserLocation().setmCurrentLocation(location);
         currentLocation = new LatLng(location.getLatitude(),location.getLongitude());
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,12));
     }
+
 }

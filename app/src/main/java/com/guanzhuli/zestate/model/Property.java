@@ -1,5 +1,9 @@
 package com.guanzhuli.zestate.model;
 
+import android.util.Log;
+
+import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
+
 import java.util.ArrayList;
 
 /**
@@ -193,6 +197,19 @@ public class Property {
 
     public void setAddress(String address) {
         mAddress = address;
+    }
+
+    public Property getPropertyByID(String propertyId){
+        Property property = null;
+        for (Property property1:mPropertyList){
+            Log.d(Property.class.getSimpleName(),property1.getId());
+            if(property1.getId().equals(propertyId)) {
+                property = property1;
+                Log.d(Property.class.getSimpleName(),propertyId);
+                return property;
+            }
+        }
+        return property;
     }
 
 
