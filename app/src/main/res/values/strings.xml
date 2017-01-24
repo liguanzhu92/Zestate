@@ -12,10 +12,13 @@
 
     <string name="google_api_client_key">AIzaSyBclxE2Q51yBTUCXBtr2vz2qj2t11qRDCo</string>
     <!--    Lily - AIzaSyBclxE2Q51yBTUCXBtr2vz2qj2t11qRDCo-->
+    <!--shashank - AIzaSyC1WiN5S7GOUCFZ0Va5GOdgnEn9HW5RMhE-->
     <string name="title_activity_buyer_navigation">BuyerNavigation</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="bottom_nav_viewType">List</string>
     <string name="bottom_nav_filter">filter</string>
+    <string name="email_hint">email</string>
+    <string name="phone_edit_text_hint">phone</string>
 </resources>
