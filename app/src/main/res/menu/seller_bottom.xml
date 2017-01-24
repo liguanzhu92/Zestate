@@ -7,8 +7,8 @@
           android:icon="@drawable/ic_location"
           android:title="List"
           app:showAsAction="ifRoom"/>
-    <item android:id="@+id/bottom_seller_map"
-          android:title="Map"
+    <item android:id="@+id/bottom_seller_add"
+          android:title="add"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/bottom_seller_profile"
           android:title="Profile"

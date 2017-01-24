@@ -2,7 +2,9 @@ package com.guanzhuli.zestate.realtor.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,24 +28,37 @@ import java.util.ArrayList;
 public class TabPostFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SwipeSellerAdapter mAdapter;
-    private ArrayList<Property> mList = PostPropertyList.getInstance();
+    private PostPropertyList mList = PostPropertyList.getInstance();
+    private SwipeRefreshLayout mRefreshLayout;
+    private String mUserId;
 
     public TabPostFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab_post, container, false);
+        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.tab_post_refresh);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mUserId = "162";
+                mList.updateData(mUserId);
+                if (mList.workStatus) {
+                    mRefreshLayout.setRefreshing(false);
+                    mList.workStatus = false;
+                }
+            }
+        });
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_tab_post);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Log.d("PostTab", String.valueOf(position));
-                Toast.makeText(getContext(), "nav to detail", Toast.LENGTH_SHORT).show();
+/*                Toast.makeText(getContext(), "nav to detail", Toast.LENGTH_SHORT).show();
                 PropertyDetailFragment propertyDetailFragment = new PropertyDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("DetailPosition", position);
@@ -53,7 +68,7 @@ public class TabPostFragment extends Fragment {
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                         .replace(R.id.seller_activity_container, propertyDetailFragment)
                         .addToBackStack(SellerHomeFragment.class.getName())
-                        .commit();
+                        .commit();*/
             }
         }));
         mAdapter = new SwipeSellerAdapter(getContext(), mList);

@@ -71,7 +71,15 @@ public class PropertyDetailFragment extends Fragment {
         mButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String propertyId = mProperties.get(position).getId();
+                String userId = mProperties.get(position).getUserId();
+                PostPropertyList.getInstance().deleteData(propertyId);
+                SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.seller_activity_container, sellerHomeFragment)
+                        .addToBackStack(PropertyDetailFragment.class.getName())
+                        .commit();
             }
         });
         mImageLocation.setOnClickListener(new View.OnClickListener() {

@@ -7,11 +7,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Toast;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.controller.VolleyController;
+import com.guanzhuli.zestate.model.PostPropertyList;
+import com.guanzhuli.zestate.model.Property;
+import com.guanzhuli.zestate.realtor.SellerActivity;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +32,10 @@ import com.guanzhuli.zestate.R;
 public class SellerHomeFragment extends Fragment {
     private ViewPager mViewPager;
     private SellerPagerAdapter mSellerPagerAdapter;
-
+    private String userId;
+    private static final String basicURL = "http://www.rjtmobile.com/realestate/getproperty.php?all&userid=";
+    private static String TAG = SellerActivity.class.getSimpleName();
+    private PostPropertyList mProperties = PostPropertyList.getInstance();
 
     public SellerHomeFragment() {
         // Required empty public constructor
@@ -31,6 +47,8 @@ public class SellerHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_home, container, false);
+        userId = "162";
+        mProperties.updateData(userId);
         initViews(view);
         return view;
     }
