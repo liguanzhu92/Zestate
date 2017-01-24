@@ -166,6 +166,10 @@
                         android:text="upload"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
+            <ImageView
+                    android:scaleType="centerInside"
+                    android:id="@+id/upload_image1"
+                    android:layout_width="match_parent" android:layout_height="220dp"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -177,12 +181,14 @@
                         android:layout_weight="1"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/new_image_name2"
                         android:textSize="22sp"
                         android:layout_gravity="center_vertical"
                         android:text="imagename2"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/new_image_upload2"
                         android:textSize="22sp"
                         android:clickable="true"
                         android:layout_gravity="center_vertical"
@@ -191,6 +197,10 @@
                         android:text="upload"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
+            <ImageView
+                    android:scaleType="centerInside"
+                    android:id="@+id/upload_image2"
+                    android:layout_width="match_parent" android:layout_height="220dp"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -202,12 +212,14 @@
                         android:layout_weight="1"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/new_image_name3"
                         android:textSize="22sp"
                         android:layout_gravity="center_vertical"
                         android:text="imagename3"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/new_image_upload3"
                         android:textSize="22sp"
                         android:clickable="true"
                         android:layout_gravity="center_vertical"
@@ -216,6 +228,10 @@
                         android:text="upload"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
+            <ImageView
+                    android:scaleType="centerInside"
+                    android:id="@+id/upload_image3"
+                    android:layout_width="match_parent" android:layout_height="220dp"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/activity_vertical_margin"
