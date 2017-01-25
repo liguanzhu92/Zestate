@@ -79,14 +79,6 @@ public class PropertyDetailFragment extends Fragment {
                     mGoogleMap = googleMap;
                     getPermission();
                     Log.d("map", String.valueOf(mProperty.getLatitude()) + "    " + String.valueOf(mProperty.getLongitude()));
-                    LatLng setLocation = new LatLng(mProperty.getLatitude(), mProperty.getLatitude());
-                    mGoogleMap.clear();
-                    mGoogleMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
-                            .anchor(0.0f, 1.0f)
-                            .position(setLocation));
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(setLocation));
-                    mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
                 }
             });
 
@@ -103,7 +95,7 @@ public class PropertyDetailFragment extends Fragment {
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
-                        mLocationRequest = LocationRequest.create();
+/*                        mLocationRequest = LocationRequest.create();
                         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
                         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
@@ -127,7 +119,15 @@ public class PropertyDetailFragment extends Fragment {
 
                                 }
                             });
-                        }
+                        }*/
+                        LatLng setLocation = new LatLng(mProperty.getLatitude(), mProperty.getLatitude());
+                        mGoogleMap.clear();
+                        mGoogleMap.addMarker(new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
+                                .anchor(0.0f, 1.0f)
+                                .position(setLocation));
+                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(setLocation));
+                        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
                     }
 
                     @Override
@@ -260,5 +260,22 @@ public class PropertyDetailFragment extends Fragment {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((LinearLayout) object);
         }
+    }
+    @Override
+    public void onResume() {
+        mMapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }

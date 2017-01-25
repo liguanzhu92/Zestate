@@ -100,6 +100,13 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
                     buildGoogleApiClient();
                     mMap.setMyLocationEnabled(true);
                 }
+                if (!getArguments().getBoolean("ADD_PROPERTY")) {
+                    LinearLayout linearLayout = (LinearLayout) mView.findViewById(R.id.seller_map_search_linear);
+                    linearLayout.setVisibility(View.INVISIBLE);
+                    currentLatLng = new LatLng(getArguments().getDouble("LATITUDE"),getArguments().getDouble("LONGITUDE"));
+                    Log.d("map", String.valueOf(getArguments().getDouble("LATITUDE")) + "  " + String.valueOf(getArguments().getDouble("LONGITUDE")));
+                    updateMapView(currentLatLng);
+                }
             }
         });
         return mView;
@@ -108,13 +115,7 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
     @Override
     public void onResume() {
         super.onResume();
-        if (!getArguments().getBoolean("ADD_PROPERTY")) {
-            LinearLayout linearLayout = (LinearLayout) mView.findViewById(R.id.seller_map_search_linear);
-            linearLayout.setVisibility(View.INVISIBLE);
-            currentLatLng = new LatLng(getArguments().getDouble("LATITUDE"),getArguments().getDouble("LONGITUDE"));
-            Log.d("map", String.valueOf(getArguments().getDouble("LATITUDE")) + "  " + String.valueOf(getArguments().getDouble("LONGITUDE")));
-            updateMapView(currentLatLng);
-        }
+
     }
 
     private void updateMapView(LatLng lat){
@@ -257,5 +258,11 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
             // other 'case' lines to check for other permissions this app might request.
             // You can add here other case statements according to your requirement.
         }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        System.gc();
     }
 }
