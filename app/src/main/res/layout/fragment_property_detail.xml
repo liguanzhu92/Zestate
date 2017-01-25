@@ -35,6 +35,12 @@
                         android:text="1840 Wessel Ct, St Charles, IL, 60174"
                         android:layout_width="match_parent" android:layout_height="wrap_content"/>
             </LinearLayout>
+            <com.google.android.gms.maps.MapView
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:id="@+id/detail_map_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"/>
+
             <View
                     android:layout_marginTop="@dimen/general_padding"
                     android:layout_marginBottom="@dimen/general_padding"

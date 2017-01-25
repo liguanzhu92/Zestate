@@ -18,7 +18,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.model.PostPropertyList;
+import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.realtor.util.Tool;
+import com.squareup.picasso.Picasso;
 import id.zelory.compressor.Compressor;
 
 import java.io.*;
@@ -39,11 +41,10 @@ public class NewPropertyFragment extends Fragment {
     private EditText mEditName, mEditType, mEditCost, mEditSize, mEditDescription;
     private Button mButtonPost, mButtonDraft, mButtonDiscard;
     private ImageView mImageLocation, mImageUpload1, mImageUpload2, mImageUpload3;
-    private PostPropertyList mProperties = PostPropertyList.getInstance();
+    private Property mProperty;
     private Bundle mBundle;
     private Bitmap mBitmap1, mBitmap2, mBitmap3;
     private int position;
-    private List<File> mFileList = new ArrayList<>();
 
     private boolean mBooleanAdd;
     /*-------image-----*/
@@ -73,6 +74,7 @@ public class NewPropertyFragment extends Fragment {
         if (mBundle != null ) {
             mBooleanAdd = false;
             position = mBundle.getInt("EditPosition");
+            mProperty = PostPropertyList.getInstance().get(position);
             setContent();
         } else {
             mBooleanAdd = true;
@@ -119,6 +121,28 @@ public class NewPropertyFragment extends Fragment {
                         .commit();
             }
         });
+        mImageLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SellerMapFragment sellerMapFragment = new SellerMapFragment();
+                Bundle bundle = new Bundle();
+                if (mBooleanAdd) {
+                    // search
+                    bundle.putBoolean("ADD_PROPERTY", true);
+                } else {
+                    // show current location
+                    bundle.putBoolean("ADD_PROPERTY", false);
+                    bundle.putDouble("LATITUDE", mProperty.getLatitude());
+                    bundle.putDouble("LONGITUDE", mProperty.getLongitude());
+                }
+                sellerMapFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in,R.anim.fade_out,R.anim.fade_in, R.anim.fade_out)
+                        .replace(R.id.seller_activity_container, sellerMapFragment)
+                        .addToBackStack(NewPropertyFragment.class.getName())
+                        .commit();
+            }
+        });
 
         // image
         mTextUploadButton1.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +177,7 @@ public class NewPropertyFragment extends Fragment {
         pDialog.setIndeterminate(true);
         pDialog.setMessage("Processing...");
         pDialog.show();
-        String url = EDIT_PROPERTY_URL + mProperties.get(position).getId();
+        String url = EDIT_PROPERTY_URL + mProperty.getId();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -172,11 +196,11 @@ public class NewPropertyFragment extends Fragment {
                 params.put("propertyname", mEditName.getText().toString());
                 params.put("propertytype", mEditType.getText().toString());
                 params.put("propertycat", "2");
-                params.put("propertyaddress1", mProperties.get(position).getAddress1());
-                params.put("propertyaddress2", mProperties.get(position).getAddress2());
-                params.put("propertyzip", String.valueOf(mProperties.get(position).getZip()));
-                params.put("propertylat", String.valueOf(mProperties.get(position).getLatitude()));
-                params.put("propertylong", String.valueOf(mProperties.get(position).getLongitude()));
+                params.put("propertyaddress1", mProperty.getAddress1());
+                params.put("propertyaddress2", mProperty.getAddress2());
+                params.put("propertyzip", String.valueOf(mProperty.getZip()));
+                params.put("propertylat", String.valueOf(mProperty.getLatitude()));
+                params.put("propertylong", String.valueOf(mProperty.getLongitude()));
                 params.put("propertycost", mEditCost.getText().toString());
                 params.put("propertysize", mEditSize.getText().toString());
                 params.put("propertydesc", mEditDescription.getText().toString());
@@ -245,12 +269,21 @@ public class NewPropertyFragment extends Fragment {
     }
 
     private void setContent() {
-        mTextAddress.setText(mProperties.get(position).getAddress1() + mProperties.get(position).getAddress2() );
-        mEditName.setText(mProperties.get(position).getName());
-        mEditType.setText(mProperties.get(position).getType());
-        mEditCost.setText(mProperties.get(position).getCost());
-        mEditSize.setText(mProperties.get(position).getSize());
-        mEditDescription.setText(mProperties.get(position).getDescription());
+        mTextAddress.setText(mProperty.getAddress1() + mProperty.getAddress2() );
+        mEditName.setText(mProperty.getName());
+        mEditType.setText(mProperty.getType());
+        mEditCost.setText(mProperty.getCost());
+        mEditSize.setText(mProperty.getSize());
+        mEditDescription.setText(mProperty.getDescription());
+        Picasso.with(getContext())
+                .load("http://" + mProperty.getImage1())
+                .into(mImageUpload1);
+        Picasso.with(getContext())
+                .load("http://" + mProperty.getImage2())
+                .into(mImageUpload2);
+        Picasso.with(getContext())
+                .load("http://" + mProperty.getImage3())
+                .into(mImageUpload3);
     }
 
     private void initView() {

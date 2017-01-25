@@ -47,7 +47,7 @@ public class TabAllFragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                userId = "162";
+                userId = "17";
                 mProperties.updateData(userId);
                 if (mProperties.workStatus) {
                     mRefreshLayout.setRefreshing(false);
@@ -60,17 +60,6 @@ public class TabAllFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Log.d("allTab", String.valueOf(position));
-/*                Toast.makeText(getContext(), "nav to detail", Toast.LENGTH_SHORT).show();
-                PropertyDetailFragment propertyDetailFragment = new PropertyDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("DetailPosition", position);
-                propertyDetailFragment.setArguments(bundle);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
-                        .replace(R.id.seller_activity_container, propertyDetailFragment)
-                        .addToBackStack(SellerHomeFragment.class.getName())
-                        .commit();*/
             }
         }));
         mAdapter = new SwipeSellerAdapter(getContext(), mProperties);

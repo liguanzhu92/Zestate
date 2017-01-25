@@ -11,6 +11,7 @@
           android:title="add"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/bottom_seller_profile"
+          android:icon="@drawable/ic_account"
           android:title="Profile"
           app:showAsAction="ifRoom"/>
 </menu>

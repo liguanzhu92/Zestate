@@ -45,7 +45,7 @@ public class TabPostFragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mUserId = "162";
+                mUserId = "17";
                 mList.updateData(mUserId);
                 if (mList.workStatus) {
                     mRefreshLayout.setRefreshing(false);
