@@ -191,7 +191,7 @@ public class NewPropertyFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                VolleyLog.d("volley", "Error: " + volleyError.getMessage());
             }
         }) {
             @Override
