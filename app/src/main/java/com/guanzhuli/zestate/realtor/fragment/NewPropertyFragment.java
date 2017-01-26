@@ -1,7 +1,9 @@
 package com.guanzhuli.zestate.realtor.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.CursorLoader;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,16 +19,16 @@ import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.controller.VolleyController;
+import com.guanzhuli.zestate.controller.VolleyMultipartRequest;
 import com.guanzhuli.zestate.model.PostPropertyList;
 import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.realtor.util.Tool;
 import com.squareup.picasso.Picasso;
 import id.zelory.compressor.Compressor;
+import android.database.Cursor;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
@@ -44,6 +46,7 @@ public class NewPropertyFragment extends Fragment {
     private Property mProperty;
     private Bundle mBundle;
     private Bitmap mBitmap1, mBitmap2, mBitmap3;
+    private String filePath;
     private int position;
 
     private boolean mBooleanAdd, mBooleanEdit;
@@ -111,7 +114,7 @@ public class NewPropertyFragment extends Fragment {
                 Toast.makeText(getContext(), "send infor to web service", Toast.LENGTH_LONG).show();
                 if (mBooleanAdd) {
                     /*addProperty();*/
-                    addProperty();
+                    addProperty1();
                 } else {
                     editProperty();
                 }
@@ -177,6 +180,49 @@ public class NewPropertyFragment extends Fragment {
                 uploadClick(PICK_IMAGE_REQUEST_3);
             }
         });
+    }
+
+    private void addProperty1() {
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, ADD_PROPERTY_URL, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse networkResponse) {
+                Log.i("volley","success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<>();
+                params.put("propertyname", mEditName.getText().toString());
+                params.put("propertytype", mEditType.getText().toString());
+                params.put("propertycat", "2");
+                params.put("propertyaddress1", "xihu qu");
+                params.put("propertyaddress2", "hangzhou");
+                params.put("propertyzip", "60174");
+                params.put("propertylat", "30");
+                params.put("propertylong", "120");
+                params.put("propertycost", mEditCost.getText().toString());
+                params.put("propertysize", mEditSize.getText().toString());
+                params.put("propertydesc", mEditDescription.getText().toString());
+                params.put("propertystatus", "yes");
+                params.put("userid", "162");
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() throws AuthFailureError {
+                Map<String, DataPart> params = new HashMap<>();
+                params.put("propertyimg1", new DataPart("test1.jpg", getFileDataFromBitmap(mBitmap1)));
+                //params.put("propertyimg2", );
+                //params.put("propertyimg3", );
+                return params;
+            }
+        };
+        VolleyController.getInstance().addToRequestQueue(volleyMultipartRequest);
     }
 
     private void uploadClick(int requestCode) {
@@ -333,6 +379,15 @@ public class NewPropertyFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST_1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri picUri = data.getData();
+
+            filePath = getPath(picUri);
+
+            Log.d("picUri", picUri.toString());
+            Log.d("filePath", filePath);
+
+            mImageUpload1.setImageURI(picUri);
             mBitmap1 = setImage(data.getData(), mImageUpload1);
 
         } else if (requestCode == PICK_IMAGE_REQUEST_2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -342,21 +397,42 @@ public class NewPropertyFragment extends Fragment {
         }
     }
 
-    private Bitmap setImage(Uri filePath, ImageView imageUpload1) {
+    /*    private Bitmap setImage(Uri filePath, ImageView imageUpload) {
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
+                imageUpload.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                return bitmap;
+            }*/
+    private Bitmap setImage(Uri filePath, ImageView imageUpload) {
         Bitmap bitmap = null;
         try {
-/*            getContext().getContentResolver().openInputStream(filePath);
-            mFileList.add(new File(getRealPathFromURI(getContext(), filePath)));*/
-            //Getting the Bitmap from Gallery
             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
-            File file= new File("/sdcard/DCIM/Camera/" + "cache");
-            //Setting the Bitmap to ImageView
-            imageUpload1.setImageBitmap(bitmap);
+            imageUpload.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             return bitmap;
         }
+    }
+    private String getPath(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(getActivity().getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+    private byte[] getFileDataFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 
 }
