@@ -22,6 +22,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,7 +39,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.guanzhuli.zestate.R;
+import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.model.PostPropertyList;
+import org.json.JSONObject;
 
 public class SellerMapFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -48,6 +55,7 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
     private LocationRequest mLocationRequest;
     private Location mLastLocation;
     private LatLng currentLatLng = null;
+    private double currentLatitude, currentLongitude;
     private Marker mCurrLocationMarker;
 
     public SellerMapFragment() {
@@ -65,14 +73,39 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
         mImageSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+/*                Log.i("map", "click search");
                 LatLng latLng = new LatLng(30.2741, 120.1551);
-                updateMapView(latLng);
+                updateMapView(latLng);*/
+                Log.i("map", "click search");
+                String address = mEditSearch.getText().toString().trim();
+                if(address.equals("")){
+                    Toast.makeText(getContext(), "Please Input Correct Address!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                try{
+                    getLocationInfo(address);
+                }catch (Exception e){
+                    Toast.makeText(getContext(), "Error Location, Please Try Again!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mImageConfirm = (ImageView) mView.findViewById(R.id.seller_map_confirm_btn);
         mImageConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // put address, longitude, latitude, pass data
+                String address = mEditSearch.getText().toString().trim();
+                NewPropertyFragment newPropertyFragment = new NewPropertyFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("EditFlag", true);
+                bundle.putBoolean("AddFlag", true);
+                bundle.putDouble("curLongitude", currentLongitude);
+                bundle.putDouble("curLatitude", currentLatitude);
+                bundle.putString("address", address);
+                newPropertyFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                        .replace(R.id.seller_activity_container, newPropertyFragment).commit();
 
             }
         });
@@ -111,6 +144,48 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
         });
         return mView;
     }
+
+    private String buildUrl(String address){
+        String[] strArr = address.split(" ");
+        StringBuilder sb = new StringBuilder();
+        sb.append("http://maps.google.com/maps/api/geocode/json?address=");
+        sb.append(strArr[0]);
+        for (int i=1; i<strArr.length; i++){
+            sb.append("%20" + strArr[i]);
+        }
+        sb.append("ka&sensor=false");
+        return sb.toString();
+    }
+
+    private void getLocationInfo(String address){
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, buildUrl(address), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Log.d("MAPS", jsonObject.toString());
+
+                try{
+                    JSONObject location = jsonObject.getJSONArray("results")
+                            .getJSONObject(0)
+                            .getJSONObject("geometry").getJSONObject("location");
+                    currentLongitude = location.getDouble("lng");
+                    currentLatitude = location.getDouble("lat");
+
+                    Log.e("MAPS", "lat: " + currentLatitude+ "lng: " +currentLongitude);
+                    updateMapView(new LatLng(currentLatitude,currentLongitude));
+                }catch (Exception e){
+                    System.out.println(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                VolleyLog.d("MAPS", "ERROR" + volleyError.getMessage());
+                Toast.makeText(getContext(), volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        VolleyController.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
 
     @Override
     public void onResume() {

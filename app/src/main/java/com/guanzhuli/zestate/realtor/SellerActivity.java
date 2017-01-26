@@ -47,6 +47,10 @@ public class SellerActivity extends AppCompatActivity {
                         break;
                     case R.id.bottom_seller_add:
                         NewPropertyFragment newPropertyFragment = new NewPropertyFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("EditFlag", false);
+                        bundle.putBoolean("AddFlag", true);
+                        newPropertyFragment.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.seller_activity_container, newPropertyFragment).commit();
                         break;
                     case R.id.bottom_seller_profile:

@@ -50,9 +50,6 @@ public class PropertyDetailFragment extends Fragment {
     private TextView mTextAddress,mTextName,mTextType, mTextCategory, mTextCost, mTextSize, mTextDescription;
     private MapView mMapView;
     private GoogleMap mGoogleMap;
-    private LocationRequest mLocationRequest;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 101;
-    private Boolean mLocationPermissionEnabled;
     private GoogleApiClient mGoogleApiClient;
     private int[] imageSrc = {R.drawable.house_sample1, R.drawable.house_sample2, R.drawable.house_sample3};
     private PostPropertyList mProperties = PostPropertyList.getInstance();
@@ -95,31 +92,6 @@ public class PropertyDetailFragment extends Fragment {
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
-/*                        mLocationRequest = LocationRequest.create();
-                        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            // TODO: Consider calling
-                            //    ActivityCompat#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-                            ActivityCompat.requestPermissions(getActivity(),
-                                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-                            return;
-                        } else {
-                            mLocationPermissionEnabled = true;
-                        }
-                        if (mLocationPermissionEnabled) {
-                            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new LocationListener() {
-                                @Override
-                                public void onLocationChanged(Location location) {
-
-                                }
-                            });
-                        }*/
                         LatLng setLocation = new LatLng(mProperty.getLatitude(), mProperty.getLatitude());
                         mGoogleMap.clear();
                         mGoogleMap.addMarker(new MarkerOptions()
@@ -171,6 +143,8 @@ public class PropertyDetailFragment extends Fragment {
             public void onClick(View view) {
                 NewPropertyFragment newPropertyFragment = new NewPropertyFragment();
                 Bundle bundle = new Bundle();
+                bundle.putBoolean("EditFlag", true);
+                bundle.putBoolean("AddFlag", false);
                 bundle.putInt("EditPosition", position);
                 newPropertyFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager()

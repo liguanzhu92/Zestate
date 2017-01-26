@@ -46,7 +46,7 @@ public class NewPropertyFragment extends Fragment {
     private Bitmap mBitmap1, mBitmap2, mBitmap3;
     private int position;
 
-    private boolean mBooleanAdd;
+    private boolean mBooleanAdd, mBooleanEdit;
     /*-------image-----*/
     private TextView mTextImageName1,mTextUploadButton1,mTextImageName2,mTextUploadButton2,mTextImageName3,mTextUploadButton3;
     /*-------image-----*/
@@ -70,14 +70,29 @@ public class NewPropertyFragment extends Fragment {
         // Inflate the layout for this fragment
         mView =  inflater.inflate(R.layout.fragment_new_property, container, false);
         initView();
+
+        return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mBundle = this.getArguments();
-        if (mBundle != null ) {
-            mBooleanAdd = false;
+        // from new: add = true, edit = false
+        // from map edit: add = true, edit = true;
+        // from detail: add = false, edit = true;
+        mBooleanEdit = mBundle.getBoolean("EditFlag");
+        mBooleanAdd = mBundle.getBoolean("AddFlag");
+        if (mBooleanEdit == true && mBooleanAdd == false) {
             position = mBundle.getInt("EditPosition");
             mProperty = PostPropertyList.getInstance().get(position);
             setContent();
-        } else {
-            mBooleanAdd = true;
+        } else if (mBooleanAdd == true && mBooleanEdit == true) {
+            mProperty = new Property();
+            mProperty.setAddress1(mBundle.getString("address"));
+            mProperty.setLongitude(mBundle.getDouble("curLongitude"));
+            mProperty.setLatitude(mBundle.getDouble("curLatitude"));
+            setContent();
         }
         VolleyLog.DEBUG = true;
         mImageLocation.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +102,6 @@ public class NewPropertyFragment extends Fragment {
             }
         });
         setClickListener();
-        return mView;
     }
 
     private void setClickListener() {
@@ -269,7 +283,11 @@ public class NewPropertyFragment extends Fragment {
     }
 
     private void setContent() {
-        mTextAddress.setText(mProperty.getAddress1() + mProperty.getAddress2() );
+        if (mProperty.getAddress2() == null) {
+            mTextAddress.setText(mProperty.getAddress1());
+        } else {
+            mTextAddress.setText(mProperty.getAddress1() + mProperty.getAddress2());
+        }
         mEditName.setText(mProperty.getName());
         mEditType.setText(mProperty.getType());
         mEditCost.setText(mProperty.getCost());
@@ -288,6 +306,7 @@ public class NewPropertyFragment extends Fragment {
 
     private void initView() {
         mTextAddress = (TextView) mView.findViewById(R.id.new_property_address);
+        mTextAddress.setText("");
         mEditName = (EditText) mView.findViewById(R.id.new_property_name);
         mEditType = (EditText) mView.findViewById(R.id.new_property_type);
         mEditCost = (EditText) mView.findViewById(R.id.new_property_cost);
