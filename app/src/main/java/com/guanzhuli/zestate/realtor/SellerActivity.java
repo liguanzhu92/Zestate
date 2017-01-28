@@ -15,6 +15,7 @@ import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.model.PostPropertyList;
+import com.guanzhuli.zestate.realtor.fragment.AppointmentRecordFragment;
 import com.guanzhuli.zestate.realtor.fragment.NewPropertyFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerHomeFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerProfileFragment;
@@ -52,6 +53,10 @@ public class SellerActivity extends AppCompatActivity {
                         bundle.putBoolean("AddFlag", true);
                         newPropertyFragment.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.seller_activity_container, newPropertyFragment).commit();
+                        break;
+                    case R.id.bottom_seller_appointment:
+                        AppointmentRecordFragment appointmentRecordFragment = new AppointmentRecordFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.seller_activity_container, appointmentRecordFragment).commit();
                         break;
                     case R.id.bottom_seller_profile:
                         SellerProfileFragment sellerProfileFragment = new SellerProfileFragment();

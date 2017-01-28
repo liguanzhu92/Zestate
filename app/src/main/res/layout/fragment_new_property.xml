@@ -6,6 +6,9 @@
               tools:context="com.guanzhuli.zestate.realtor.fragment.NewPropertyFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <ImageView
+            android:src="@drawable/logo"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
     <LinearLayout
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="horizontal"

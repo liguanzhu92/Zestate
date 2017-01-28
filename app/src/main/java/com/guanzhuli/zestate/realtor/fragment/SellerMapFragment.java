@@ -82,6 +82,10 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
                     Toast.makeText(getContext(), "Please Input Correct Address!", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if(address.charAt(0) >= '0' && address.charAt(0) <= '9'){
+                    Toast.makeText(getContext(), "Please Enter the Address begin with number!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 // check address start with number
                 try{
                     getLocationInfo(address);
