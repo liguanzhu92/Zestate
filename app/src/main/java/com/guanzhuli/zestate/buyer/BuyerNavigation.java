@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -16,20 +17,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -51,7 +48,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
-import com.guanzhuli.zestate.buyer.fragments.BuyerFragment;
 import com.guanzhuli.zestate.buyer.fragments.PropertyListView;
 import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.model.Property;
@@ -66,23 +62,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener
+        ,PropertyRecyclerView.OnClickCard{
 
     private GoogleMap mGoogleMap;
     private GoogleApiClient mGoogleApiClient;
-    private Boolean mLocationPermissionEnabled;
+    private Boolean mLocationPermissionEnabled = false;
     private LocationRequest mLocationRequest;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 101;
-    private Marker mCurrentMarker;
+    private Marker mPreviousMarker;
     private LatLng currentLocation;
     private SlidingUpPanelLayout mSlidingUpPanelLayout;
     private PropertyRecyclerView mPropertyadapter;
     RecyclerView mRecyclerView;
     HashMap<String,Integer> markerIdHashMap;
+    HashMap<Integer,Marker> markerHashMap;
     private ProgressDialog pd;
+    private Location mLocation;
+    private ArrayList<Property> propertyList;
+    private LinearLayoutManager mLinearLayoutManager;
+    private static final int INTERVAL = 60 * 1000;
+    private static final int FASTINTERVAL = 60 * 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +108,11 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
             drawer.setDrawerListener(toggle);
             toggle.syncState();
             mRecyclerView = (RecyclerView) findViewById(R.id.map_recycler_view);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(BuyerNavigation.this, LinearLayoutManager.HORIZONTAL, false));
+            mLinearLayoutManager = new LinearLayoutManager(BuyerNavigation.this, LinearLayoutManager.HORIZONTAL, false);
+            mRecyclerView.setLayoutManager(mLinearLayoutManager);
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
-            mPropertyadapter = new PropertyRecyclerView(BuyerNavigation.this);
+            mPropertyadapter = new PropertyRecyclerView(BuyerNavigation.this,this);
             mRecyclerView.setAdapter(mPropertyadapter);
             mPropertyadapter.notifyDataSetChanged();
             mSlidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slideUpPanelLayout);
@@ -153,9 +158,8 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                             if (item.getTitle().equals("List")) {
                                 item.setTitle("Map");
                                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                ft.replace(R.id.fragment_replaceble,new PropertyListView()).addToBackStack(null).commit();
-                            }
-                            else {
+                                ft.replace(R.id.fragment_replaceble, new PropertyListView()).addToBackStack(null).commit();
+                            } else {
                                 item.setTitle("List");
                                 onBackPressed();
                             }
@@ -163,6 +167,35 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                     }
 
                     return true;
+                }
+            });
+            setLocation();
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    if(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0){
+                        if(mPreviousMarker!=null)
+                        setMarkerOptionsOnChange(markerIdHashMap.get(mPreviousMarker.getId()));
+                        Integer postion = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                        Marker marker = markerHashMap.get(postion);
+                        markerIdHashMap.remove(marker.getId());
+                        markerHashMap.remove(postion);
+                        marker.remove();
+                        Property property = propertyList.get(postion);
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        LatLng latLng = new LatLng(property.getLatitude(),property.getLongitude());
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                        markerOptions.position(latLng);
+                        markerOptions.title(property.getAddress1());
+                        Marker newmarker = mGoogleMap.addMarker(markerOptions);
+                        mPreviousMarker = newmarker;
+                        markerIdHashMap.put(newmarker.getId(),postion);
+                        markerHashMap.put(postion,newmarker);
+                        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+                    }
+
                 }
             });
         }
@@ -226,11 +259,11 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        getRealEstatedata();
         mGoogleMap = googleMap;
         markerIdHashMap = new HashMap<>();
-        pd.show();
-        setLocation();
-        getRealEstatedata();
+        markerHashMap =new HashMap<>();
+        //setLocation();
         if (mGoogleMap != null) {
             mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
@@ -252,18 +285,20 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
     }
 
     private void setLocation() {
-        if (mGoogleMap == null)
-            return;
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
         mGoogleApiClient.connect();
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTINTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     private void getRealEstatedata() {
+        pd.show();
         String getData = "http://www.rjtmobile.com/realestate/getproperty.php?all";
         final ArrayList<Property> mPropertyList = new ArrayList<>();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getData, new Response.Listener<JSONArray>() {
@@ -301,9 +336,17 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                     mPropertyList.add(property);
                 }
                 VolleyController.getInstance().getmProperty().setmPropertyList(mPropertyList);
-                mPropertyadapter.notifyItemRangeChanged(0, mPropertyList.size());
-                mPropertyadapter.notifyOnDataChange();
-                showAllPropertiesList();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPropertyadapter.notifyItemRangeChanged(0, mPropertyList.size());
+                        mPropertyadapter.notifyOnDataChange();
+                        showAllPropertiesList();
+                    }
+                });
+                if(pd.isShowing())
+                    pd.dismiss();
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -358,9 +401,12 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         if (location == null) {
 
         } else {
+            mLocation = location;
             UserLocation userLocation = VolleyController.getInstance().getUserLocation();
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
             currentLocation = ll;
+            currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12));
             userLocation.setmCurrentLocation(location);
             Geocoder geo = new Geocoder(this);
             try {
@@ -370,9 +416,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (mCurrentMarker != null) {
-                mCurrentMarker.remove();
-            }
+
             //showMarkers(ll);
             if(pd.isShowing())
                 pd.dismiss();
@@ -393,45 +437,83 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
-    //show markers
+    /*//show markers
     public void showMarkers(LatLng latLang) {
         mCurrentMarker = mGoogleMap.addMarker(new MarkerOptions().position(latLang)
                 .title("current Location")
                 .snippet(VolleyController.getInstance().getUserLocation().getmCurrentAddress().getAddressLine(0)));
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLang, 15f));
     }
-
+*/
     public void showAllPropertiesList() {
-        ArrayList<Property> propertyList = VolleyController.getInstance().getmProperty().getmPropertyList();
+        propertyList = VolleyController.getInstance().getmProperty().getmPropertyList();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (int i = 0; i < propertyList.size(); i++) {
-            LatLng latLng = new LatLng(propertyList.get(i).getLatitude(), propertyList.get(i).getLongitude());
-            MarkerOptions markerOptions = new MarkerOptions();
-            Geocoder geo = new Geocoder(this);
-            try {
-                List<Address> addresses = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                markerOptions.position(latLng);
-                builder.include(markerOptions.getPosition());
-                /*markerOptions.title(addresses.get(0).getLocality());
-                markerOptions.snippet(addresses.get(0).getAddressLine(0));*/
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            String houseType = propertyList.get(i).getType();
+            setMarkerColor(houseType);
+            MarkerOptions markerOptions = setMarkerColor(houseType);
+            LatLng latLng = new LatLng(propertyList.get(i).getLatitude(),propertyList.get(i).getLongitude());
+            markerOptions.position(latLng);
+            markerOptions.title(propertyList.get(i).getAddress1());
             Marker marker = mGoogleMap.addMarker(markerOptions);
             markerIdHashMap.put(marker.getId(),i);
+            markerHashMap.put(i,marker);
+            builder.include(latLng);
         }
         LatLngBounds bounds = builder.build();
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 10);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Location location = VolleyController.getInstance().getUserLocation().getmCurrentLocation();
-        if(location == null)
+        Location location = mLocation;
+       // Log.d("BuyerNavigation",location.toString()+"uhgvhyjk");
+        if(location == null){
+            Log.d("BuyerNavigation","location is null here ");
             location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        VolleyController.getInstance().getUserLocation().setmCurrentLocation(location);
-        currentLocation = new LatLng(location.getLatitude(),location.getLongitude());
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,12));
+            Log.d("BuyerNavigation",location.toString());
+        }
+        if(location !=null) {
+            VolleyController.getInstance().getUserLocation().setmCurrentLocation(location);
+            currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12));
+        }
+        else{
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,this);
+        }
+    }
+
+    @Override
+    public void onClickOfCardItem() {
+        if (mSlidingUpPanelLayout != null && (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED))
+            mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+    }
+
+    MarkerOptions setMarkerColor(String houseType){
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        if(houseType.equalsIgnoreCase("Rent")){
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        }else if(houseType.equalsIgnoreCase("villa")){
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        }else if(houseType.equalsIgnoreCase("house"))
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+        else
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        return markerOptions;
+    }
+
+    //for previous marker changing positons
+    private void setMarkerOptionsOnChange(int pos) {
+
+        Property property = propertyList.get(pos);
+        String houseType = property.getType();
+        MarkerOptions markerOptions = setMarkerColor(houseType);
+        LatLng latLng = new LatLng(property.getLatitude(),property.getLongitude());
+        markerOptions.position(latLng);
+        markerOptions.title(property.getAddress1());
+        Marker marker = mGoogleMap.addMarker(markerOptions);
+        markerIdHashMap.put(marker.getId(),pos);
+        markerHashMap.put(pos,marker);
     }
 
 }
