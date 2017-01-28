@@ -29,9 +29,11 @@ import java.util.ArrayList;
 public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerView.PropertyViewHolder> {
     ArrayList<Property> mPropertyList;
     FragmentActivity mContext;
-    public PropertyRecyclerView(Context context){
+    OnClickCard mOnclickCard;
+    public PropertyRecyclerView(Context context,OnClickCard mOnclickCard){
         mPropertyList= VolleyController.getInstance().getmProperty().getmPropertyList();
         this.mContext = (FragmentActivity) context;
+        this.mOnclickCard = mOnclickCard;
     }
     @Override
     public PropertyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,7 +57,7 @@ public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerV
             propertyImageView.setImageResource(R.drawable.home_placeholder);
         else {
             Picasso.with(mContext).load(property.getImage1())
-                    .error(R.drawable.home_placeholder)
+                    .error(R.drawable.home_default)
                     .placeholder(R.drawable.home_placeholder)
                     .into(propertyImageView);
         }
@@ -63,6 +65,7 @@ public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerV
         propeCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mOnclickCard.onClickOfCardItem();
                 Log.d(PropertyRecyclerView.class.getSimpleName(),"item clicked on"+position);
                 FragmentTransaction ft = mContext.getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_replaceble, PropertyViewFragment.newInstance(mPropertyList.get(position).getId()))
@@ -96,5 +99,9 @@ public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerV
         mPropertyList.clear();
         mPropertyList = VolleyController.getInstance().getmProperty().getmPropertyList();
         this.notifyDataSetChanged();
+    }
+
+    public interface OnClickCard{
+         void onClickOfCardItem();
     }
 }

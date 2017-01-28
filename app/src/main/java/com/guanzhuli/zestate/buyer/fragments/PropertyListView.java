@@ -15,7 +15,7 @@ import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PropertyListView extends Fragment {
+public class PropertyListView extends Fragment implements PropertyRecyclerView.OnClickCard {
 
 
     public PropertyListView() {
@@ -29,8 +29,12 @@ public class PropertyListView extends Fragment {
         View view  = inflater.inflate(R.layout.fragment_property_list_view, container, false);
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.property_list_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.setAdapter(new PropertyRecyclerView(getActivity()));
+        mRecyclerView.setAdapter(new PropertyRecyclerView(getActivity(),this));
         return view;
     }
 
+    @Override
+    public void onClickOfCardItem() {
+
+    }
 }

@@ -10,7 +10,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="google_api_client_key">AIzaSyBclxE2Q51yBTUCXBtr2vz2qj2t11qRDCo</string>
+    <string name="google_api_client_key">AIzaSyC1WiN5S7GOUCFZ0Va5GOdgnEn9HW5RMhE</string>
     <!--    Lily - AIzaSyBclxE2Q51yBTUCXBtr2vz2qj2t11qRDCo-->
     <!--shashank - AIzaSyC1WiN5S7GOUCFZ0Va5GOdgnEn9HW5RMhE-->
     <string name="title_activity_buyer_navigation">BuyerNavigation</string>

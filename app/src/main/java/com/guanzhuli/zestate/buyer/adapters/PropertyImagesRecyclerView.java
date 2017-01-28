@@ -38,7 +38,7 @@ public class PropertyImagesRecyclerView extends RecyclerView.Adapter<PropertyIma
         if(count<=1 && mString[0].equalsIgnoreCase("no image"))
             propertyImageView.setImageResource(R.drawable.home_placeholder);
         else
-            Picasso.with(mContext).load(mString[position]).error(R.drawable.home_default).into(propertyImageView);
+            Picasso.with(mContext).load("http://".concat(mString[position])).error(R.drawable.home_default).into(propertyImageView);
     }
 
     @Override

@@ -8,9 +8,7 @@ import com.android.volley.toolbox.Volley;
 import com.guanzhuli.zestate.model.Property;
 import com.guanzhuli.zestate.model.UserLocation;
 
-/**
- * Created by Guanzhu Li on 1/13/2017.
- */
+
 public class VolleyController extends Application {
 
     public static final String TAG = VolleyController.class
