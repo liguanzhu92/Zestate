@@ -5,9 +5,52 @@
              tools:context="com.guanzhuli.zestate.realtor.fragment.SellerMapFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<com.google.android.gms.maps.MapView
-        android:id="@+id/seller_map_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/seller_map_view"
+              android:name="com.google.android.gms.maps.SupportMapFragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="com.guanzhuli.zestate.realtor.SellerActivity" />
+    <LinearLayout
+            android:id="@+id/seller_map_search_linear"
+            android:background="@color/colorPrimaryLight"
+            android:layout_margin="@dimen/general_padding"
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+
+                android:layout_weight="7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+            <EditText
+                    android:id="@+id/seller_map_edit_search"
+                    android:padding="@dimen/general_padding"
+                    android:background="@color/button_text_color"
+                    android:layout_margin="@dimen/general_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="hint"/>
+        </android.support.design.widget.TextInputLayout>
+        <ImageView
+            android:id="@+id/seller_map_search_btn"
+            android:tint="@color/button_text_color"
+            android:padding="@dimen/general_padding"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:src="@drawable/ic_target"
+            android:layout_width="0dp" android:layout_height="match_parent"/>
+        <ImageView
+                android:id="@+id/seller_map_confirm_btn"
+                android:tint="@color/button_text_color"
+                android:padding="@dimen/general_padding"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:src="@drawable/ic_confirm"
+                android:layout_width="0dp" android:layout_height="match_parent"/>
+    </LinearLayout>
+
 
 </FrameLayout>

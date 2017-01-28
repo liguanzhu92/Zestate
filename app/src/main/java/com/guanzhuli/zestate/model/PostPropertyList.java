@@ -11,7 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Guanzhu Li on 1/22/2017.
@@ -52,9 +55,9 @@ public class PostPropertyList extends ArrayList<Property> {
                         property.setAddress1(person.getString("Property Address1"));
                         property.setAddress2(person.getString("Property Address2"));
                         property.setZip(Integer.parseInt(person.getString("Property Zip")));
-                        property.setImage1(person.getString("Property Image 1"));
-                        property.setImage2(person.getString("Property Image 2"));
-                        property.setImage3(person.getString("Property Image 3"));
+                        property.setImage1(parseURL(person.getString("Property Image 1")));
+                        property.setImage2(parseURL(person.getString("Property Image 2")));
+                        property.setImage3(parseURL(person.getString("Property Image 3")));
                         property.setLatitude(Double.parseDouble(person.getString("Property Latitude")));
                         property.setLongitude(Double.parseDouble(person.getString("Property Longitude")));
                         property.setCost(person.getString("Property Cost"));
@@ -103,5 +106,18 @@ public class PostPropertyList extends ArrayList<Property> {
             }
         });
         VolleyController.getInstance().addToRequestQueue(stringRequest);
+    }
+
+
+    private String parseURL(String rawUrl) {
+        rawUrl.trim();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < rawUrl.length(); i++) {
+            if (rawUrl.charAt(i) != '\\') {
+                stringBuilder.append(rawUrl.charAt(i));
+            }
+        }
+        String rawURL = stringBuilder.toString();
+        return rawURL.replace(" ", "%20");
     }
 }

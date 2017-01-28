@@ -19,7 +19,10 @@ import com.guanzhuli.zestate.realtor.SellerActivity;
 import com.guanzhuli.zestate.realtor.fragment.NewPropertyFragment;
 import com.guanzhuli.zestate.realtor.fragment.PropertyDetailFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerHomeFragment;
+import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -64,6 +67,21 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
                         .commit();
             }
         });
+        String headURL = "https://www.shareicon.net/data/256x256/2015/09/15/101491_house_512x512.png";
+        if (!mList.get(position).getImage1().equals("")) {
+            headURL = mList.get(position).getImage1();
+        } else if (!mList.get(position).getImage2().equals("")) {
+            headURL = mList.get(position).getImage2();
+        } else if (!mList.get(position).getImage3().equals("")) {
+            headURL = mList.get(position).getImage3();
+        }
+        if (headURL != null) {
+                Picasso.with(mContext)
+                        .load("http://" + headURL)
+                        .into(viewHolder.mImageHead);
+        } else {
+            viewHolder.mImageHead.setImageResource(R.mipmap.house_sample);
+        }
         viewHolder.mImageEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +121,7 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
 class SwipeSellerHolder extends RecyclerView.ViewHolder {
     SwipeLayout mSwipeLayout;
     TextView mTextName, mTextCost, mTextCategory, mTextAddress;
-    ImageView mImageEdit, mImageDelete;
+    ImageView mImageEdit, mImageDelete, mImageHead;
     public SwipeSellerHolder(View itemView) {
         super(itemView);
         mSwipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipelist_property_seller);
@@ -113,5 +131,6 @@ class SwipeSellerHolder extends RecyclerView.ViewHolder {
         mTextAddress = (TextView) itemView.findViewById(R.id.swipe_addr);
         mImageEdit = (ImageView) itemView.findViewById(R.id.swipe_edit_property);
         mImageDelete = (ImageView) itemView.findViewById(R.id.swipe_delete_property);
+        mImageHead = (ImageView) itemView.findViewById(R.id.swipe_image);
     }
 }

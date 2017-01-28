@@ -47,7 +47,7 @@ public class SellerHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_home, container, false);
-        userId = "162";
+        userId = "17";
         mProperties.updateData(userId);
         initViews(view);
         return view;
