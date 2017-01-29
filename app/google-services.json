@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "307797721807",
+    "firebase_url": "https://clean-healer-156517.firebaseio.com",
+    "project_id": "clean-healer-156517",
+    "storage_bucket": "clean-healer-156517.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307797721807:android:a3d06982a11a5aed",
+        "android_client_info": {
+          "package_name": "com.guanzhuli.zestate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307797721807-35skdt3i2kmis2tnm1i29hlaqsk1mekc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guanzhuli.zestate",
+            "certificate_hash": "3A9F3D68F7E8EF9C239EBFAB2E20B219855EF3D0"
+          }
+        },
+        {
+          "client_id": "307797721807-3dntcfmrlkq3v5lvb93fqeskadp8f4hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv8_XzN56eB2crSkOl7luFSG2M2YPYkb0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307797721807-3dntcfmrlkq3v5lvb93fqeskadp8f4hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
