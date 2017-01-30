@@ -1,5 +1,6 @@
 package com.guanzhuli.zestate.model;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
@@ -16,7 +17,6 @@ public class Property {
     private String mCategory;
     private String mAddress1;
     private String mAddress2;
-    private String mAddress;
     private int mZip;
     private String mImage1;
     private String mImage2;
@@ -30,6 +30,35 @@ public class Property {
     private String mModifyDate;
     private String mStatus;
     private String mUserId;
+
+    public Bitmap getBitmap1() {
+        return mBitmap1;
+    }
+
+    public void setBitmap1(Bitmap bitmap1) {
+        mBitmap1 = bitmap1;
+    }
+
+    public Bitmap getBitmap2() {
+        return mBitmap2;
+    }
+
+    public void setBitmap2(Bitmap bitmap2) {
+        mBitmap2 = bitmap2;
+    }
+
+    public Bitmap getBitmap3() {
+        return mBitmap3;
+    }
+
+    public void setBitmap3(Bitmap bitmap3) {
+        mBitmap3 = bitmap3;
+    }
+
+    private Bitmap mBitmap1;
+    private Bitmap mBitmap2;
+    private Bitmap mBitmap3;
+
     private ArrayList<Property> mPropertyList = new ArrayList<>();
 
     public ArrayList<Property> getPropertyList() {
@@ -124,7 +153,7 @@ public class Property {
 
     public void setImage3(String image3)
     {
-        image3 = image3.replaceFirst("www.","http.//");
+        image3 = image3.replaceFirst("www.","http://");
         mImage3 = image3;
     }
 
@@ -200,14 +229,6 @@ public class Property {
         mUserId = userId;
     }
 
-    public String getAddress() {
-        return mAddress;
-    }
-
-    public void setAddress(String address) {
-        mAddress = address;
-    }
-
     public Property getPropertyByID(String propertyId){
         Property property = null;
         for (Property property1:mPropertyList){
@@ -221,25 +242,4 @@ public class Property {
         return property;
     }
 
-
-
-/*    	"Property Id": "171",
-                "Property Name": "aaabc",
-                "Property Type": "Vallia",
-                "Property Category": "2",
-                "Property Address1": "adsfsdfad",
-                "Property Address2": "afafsd",
-                "Property Zip": "11",
-                "Property Image 1": "www.rjtmobile.com\\\/realestate\\\/images\\\/11\\\/fb_icon@2x.png",
-                "Property Image 2": "www.rjtmobile.com\\\/realestate\\\/images\\\/11\\\/fb_icon@2x.png",
-                "Property Image 3": "www.rjtmobile.com\\\/realestate\\\/images\\\/11\\\/fb_icon@2x.png",
-                "Property Latitude": 11,
-                "Property Longitude": 11,
-                "Property Cost": "11",
-                "Property Size": "11",
-                "Property Desc": "sdfasdfa",
-                "Property Published Date": "2016-10-27 22:15:38",
-                "Property Modify Date": "2016-10-27 22:15:38",
-                "Property Status": "yes",
-                "User Id": "2"*/
 }

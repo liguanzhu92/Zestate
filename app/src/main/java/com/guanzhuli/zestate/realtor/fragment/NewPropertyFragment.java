@@ -391,23 +391,34 @@ public class NewPropertyFragment extends Fragment {
                 e.printStackTrace();
             }
             mImageUpload1.setImageBitmap(mBitmap1);
+            mProperty.setBitmap1(mBitmap1);
 
         } else if (requestCode == PICK_IMAGE_REQUEST_2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mBitmap2 = setImage(data.getData(), mImageUpload2);
+            Uri picUri = data.getData();
+            filePath = getPath(picUri);
+            Log.d("picUri", picUri.toString());
+            Log.d("filePath", filePath);
+            mImageUpload1.setImageURI(picUri);
+            try {
+                mBitmap2 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mImageUpload2.setImageBitmap(mBitmap2);
+            mProperty.setBitmap2(mBitmap2);
         } else if (requestCode == PICK_IMAGE_REQUEST_3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mBitmap3 = setImage(data.getData(), mImageUpload3);
-        }
-    }
-
-    private Bitmap setImage(Uri filePath, ImageView imageUpload) {
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
-            imageUpload.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            return bitmap;
+            Uri picUri = data.getData();
+            filePath = getPath(picUri);
+            Log.d("picUri", picUri.toString());
+            Log.d("filePath", filePath);
+            mImageUpload1.setImageURI(picUri);
+            try {
+                mBitmap3 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mImageUpload3.setImageBitmap(mBitmap3);
+            mProperty.setBitmap3(mBitmap3);
         }
     }
     private String getPath(Uri contentUri) {
