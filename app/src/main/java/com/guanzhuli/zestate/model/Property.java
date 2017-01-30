@@ -1,19 +1,15 @@
 package com.guanzhuli.zestate.model;
 
-import android.location.Location;
 import android.util.Log;
 
-import com.guanzhuli.zestate.buyer.BuyerNavigation;
 import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
-import com.guanzhuli.zestate.controller.VolleyController;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Guanzhu Li on 1/21/2017.
  */
-public class Property implements Comparable<Property>{
+public class Property {
     private String mId;
     private String mName;
     private String mType;
@@ -36,14 +32,11 @@ public class Property implements Comparable<Property>{
     private String mUserId;
     private ArrayList<Property> mPropertyList = new ArrayList<>();
 
-    public ArrayList<Property> getmPropertyList() {
-        Log.d(BuyerNavigation.class.getSimpleName(),mPropertyList.toString());
-        Collections.sort(mPropertyList);
-        Log.d(BuyerNavigation.class.getSimpleName(), mPropertyList.toString());
+    public ArrayList<Property> getPropertyList() {
         return mPropertyList;
     }
 
-    public void setmPropertyList(ArrayList<Property> mPropertyList) {
+    public void setPropertyList(ArrayList<Property> mPropertyList) {
         this.mPropertyList = mPropertyList;
     }
 
@@ -71,12 +64,16 @@ public class Property implements Comparable<Property>{
         mType = type;
     }
 
-    public String getmCategory() {
+    public String getCategory() {
         return mCategory;
     }
 
-    public void setmCategory(String mCategory) {
-        this.mCategory = mCategory;
+    public void setCategory(String Category) {
+        if (Category.equals("1")) {
+            mCategory = "sell";
+        } else {
+            mCategory = "rent";
+        }
     }
     public String getAddress1() {
         return mAddress1;
@@ -127,7 +124,7 @@ public class Property implements Comparable<Property>{
 
     public void setImage3(String image3)
     {
-        image3 = image3.replaceFirst("www.","http://");
+        image3 = image3.replaceFirst("www.","http.//");
         mImage3 = image3;
     }
 
@@ -222,26 +219,6 @@ public class Property implements Comparable<Property>{
             }
         }
         return property;
-    }
-
-    @Override
-    public int compareTo(Property o) {
-        Location location = VolleyController.getInstance().getUserLocation().getmCurrentLocation();
-        Location thisLocati = new Location("");
-        thisLocati.setLatitude(this.getLatitude());
-        thisLocati.setLongitude(this.getLongitude());
-
-        Location oLocati = new Location("");
-        oLocati.setLatitude(o.getLatitude());
-        oLocati.setLongitude(o.getLongitude());
-
-        if(location.distanceTo(thisLocati)<location.distanceTo(oLocati)){
-            Log.d(BuyerNavigation.class.getSimpleName(),this.getName()+location.distanceTo(thisLocati)/1000+":"+
-                    location.distanceTo(oLocati)/1000+o.getName());
-            return -1;
-        }
-
-        return 0;
     }
 
 

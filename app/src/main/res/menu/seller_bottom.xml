@@ -4,11 +4,16 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".realtor.SellerActivity">
     <item android:id="@+id/bottom_seller_list"
-          android:icon="@drawable/ic_location"
+          android:icon="@drawable/ic_record"
           android:title="List"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/bottom_seller_add"
           android:title="add"
+          android:icon="@drawable/ic_add"
+          app:showAsAction="ifRoom"/>
+    <item android:id="@+id/bottom_seller_appointment"
+          android:title="Appointment"
+          android:icon="@drawable/ic_calender"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/bottom_seller_profile"
           android:icon="@drawable/ic_account"

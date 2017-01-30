@@ -39,11 +39,11 @@
                 <TextView
                         android:textColor="@color/colorPrimaryDark"
                         android:text="UserName:"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
                         android:id="@+id/profile_username"
-                        android:text="Your Username"
+                        android:text="Lily Li"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -54,7 +54,7 @@
                 <TextView
                         android:textColor="@color/colorPrimaryDark"
                         android:text="Mobile:"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
                         android:id="@+id/profile_mobile"
@@ -69,7 +69,7 @@
                 <TextView
                         android:textColor="@color/colorPrimaryDark"
                         android:text="Email:"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
                         android:id="@+id/profile_email"

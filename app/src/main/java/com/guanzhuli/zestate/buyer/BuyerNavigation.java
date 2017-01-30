@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -62,7 +61,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -316,7 +314,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         property.setId(jsonProperty.getString("Property Id"));
                         property.setName(jsonProperty.getString("Property Name"));
                         property.setType(jsonProperty.getString("Property Type"));
-                        property.setmCategory(jsonProperty.getString("Property Category"));
+                        property.setCategory(jsonProperty.getString("Property Category"));
                         property.setAddress1(jsonProperty.getString("Property Address1"));
                         property.setAddress2(jsonProperty.getString("Property Address2"));
                         property.setZip(Integer.parseInt(jsonProperty.getString("Property Zip")));
@@ -339,7 +337,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                     }
                     mPropertyList.add(property);
                 }
-                VolleyController.getInstance().getmProperty().setmPropertyList(mPropertyList);
+                VolleyController.getInstance().getmProperty().setPropertyList(mPropertyList);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -466,7 +464,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
     }
 */
     public void showAllPropertiesList() {
-        propertyList = VolleyController.getInstance().getmProperty().getmPropertyList();
+        propertyList = VolleyController.getInstance().getmProperty().getPropertyList();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (int i = 0; i < propertyList.size(); i++) {
             String houseType = propertyList.get(i).getType();

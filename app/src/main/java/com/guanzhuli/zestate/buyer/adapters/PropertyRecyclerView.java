@@ -1,9 +1,7 @@
 package com.guanzhuli.zestate.buyer.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guanzhuli.zestate.R;
-import com.guanzhuli.zestate.buyer.BuyerNavigation;
 import com.guanzhuli.zestate.buyer.fragments.PropertyViewFragment;
 import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.model.Property;
@@ -31,7 +28,7 @@ public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerV
     FragmentActivity mContext;
     OnClickCard mOnclickCard;
     public PropertyRecyclerView(Context context,OnClickCard mOnclickCard){
-        mPropertyList= VolleyController.getInstance().getmProperty().getmPropertyList();
+        mPropertyList= VolleyController.getInstance().getmProperty().getPropertyList();
         this.mContext = (FragmentActivity) context;
         this.mOnclickCard = mOnclickCard;
     }
@@ -97,7 +94,7 @@ public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerV
 
     public void notifyOnDataChange(){
         mPropertyList.clear();
-        mPropertyList = VolleyController.getInstance().getmProperty().getmPropertyList();
+        mPropertyList = VolleyController.getInstance().getmProperty().getPropertyList();
         this.notifyDataSetChanged();
     }
 

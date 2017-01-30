@@ -56,6 +56,7 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
     private Location mLastLocation;
     private LatLng currentLatLng = null;
     private double currentLatitude, currentLongitude;
+    private String mAddress;
     private Marker mCurrLocationMarker;
 
     public SellerMapFragment() {
@@ -82,6 +83,11 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
                     Toast.makeText(getContext(), "Please Input Correct Address!", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if(address.charAt(0) < '0' || address.charAt(0) > '9'){
+                    Toast.makeText(getContext(), "Please Enter the Address begin with number!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                // check address start with number
                 try{
                     getLocationInfo(address);
                 }catch (Exception e){
@@ -101,7 +107,7 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
                 bundle.putBoolean("AddFlag", true);
                 bundle.putDouble("curLongitude", currentLongitude);
                 bundle.putDouble("curLatitude", currentLatitude);
-                bundle.putString("address", address);
+                bundle.putString("address", mAddress);
                 newPropertyFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
@@ -153,7 +159,7 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
         for (int i=1; i<strArr.length; i++){
             sb.append("%20" + strArr[i]);
         }
-        sb.append("ka&sensor=false");
+        sb.append("&sensor=false");
         return sb.toString();
     }
 
@@ -169,7 +175,7 @@ public class SellerMapFragment extends Fragment implements GoogleApiClient.Conne
                             .getJSONObject("geometry").getJSONObject("location");
                     currentLongitude = location.getDouble("lng");
                     currentLatitude = location.getDouble("lat");
-
+                    mAddress = jsonObject.getJSONArray("results").getJSONObject(0).getString("formatted_address");
                     Log.e("MAPS", "lat: " + currentLatitude+ "lng: " +currentLongitude);
                     updateMapView(new LatLng(currentLatitude,currentLongitude));
                 }catch (Exception e){
