@@ -146,6 +146,14 @@
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/new_image_take1"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.8"
+                        android:text="take photo"
+                        android:layout_height="wrap_content"/>
+                <TextView
                         android:clickable="true"
                         android:id="@+id/new_image_upload1"
                         android:layout_gravity="center_vertical"
@@ -175,6 +183,14 @@
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:id="@+id/new_image_take2"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.8"
+                        android:text="take photo"
+                        android:layout_height="wrap_content"/>
+                <TextView
                         android:id="@+id/new_image_upload2"
                         android:clickable="true"
                         android:layout_gravity="center_vertical"
@@ -203,6 +219,14 @@
                         android:text="imagename3"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/new_image_take3"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.8"
+                        android:text="take photo"
+                        android:layout_height="wrap_content"/>
                 <TextView
                         android:id="@+id/new_image_upload3"
                         android:clickable="true"

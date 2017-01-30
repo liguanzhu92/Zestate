@@ -30,6 +30,8 @@ import id.zelory.compressor.Compressor;
 import android.database.Cursor;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,18 +50,23 @@ public class NewPropertyFragment extends Fragment {
     private Property mProperty;
     private Bundle mBundle;
     private Bitmap mBitmap1, mBitmap2, mBitmap3;
-    private String filePath;
+    private int count;
     private int position;
 
     private boolean mBooleanAdd, mBooleanEdit;
     /*-------image-----*/
-    private TextView mTextImageName1,mTextUploadButton1,mTextImageName2,mTextUploadButton2,mTextImageName3,mTextUploadButton3;
+    private TextView mTextImageName1,mTextUploadButton1,mTextTakePhoto1,
+            mTextImageName2,mTextUploadButton2,mTextTakePhoto2,
+            mTextImageName3,mTextUploadButton3, mTextTakePhoto3;
     /*-------image-----*/
 
 
-    private int PICK_IMAGE_REQUEST_1 = 1;
-    private int PICK_IMAGE_REQUEST_2 = 2;
-    private int PICK_IMAGE_REQUEST_3 = 3;
+    private final int PICK_IMAGE_REQUEST_1 = 1;
+    private final int PICK_IMAGE_REQUEST_2 = 2;
+    private final int PICK_IMAGE_REQUEST_3 = 3;
+    private final int TAKE_PHOTO_CODE_1 = 11;
+    private final int TAKE_PHOTO_CODE_2 = 12;
+    private final int TAKE_PHOTO_CODE_3 = 13;
     private static final String ADD_PROPERTY_URL = "http://www.rjtmobile.com/realestate/register.php?property&add";
     private static final String EDIT_PROPERTY_URL = "http://www.rjtmobile.com/realestate/register.php?property&edit&pptyid=";
 
@@ -75,6 +82,7 @@ public class NewPropertyFragment extends Fragment {
         // Inflate the layout for this fragment
         Log.d("newProperty","onCreateView");
         mView =  inflater.inflate(R.layout.fragment_new_property, container, false);
+        count = 0;
         initView();
         getFlag();
         return mView;
@@ -185,9 +193,37 @@ public class NewPropertyFragment extends Fragment {
                 uploadClick(PICK_IMAGE_REQUEST_3);
             }
         });
+        // take picture
+        mTextTakePhoto1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePhoto(TAKE_PHOTO_CODE_1);
+            }
+        });
+        mTextTakePhoto2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePhoto(TAKE_PHOTO_CODE_2);
+            }
+        });
+        mTextTakePhoto3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePhoto(TAKE_PHOTO_CODE_3);
+            }
+        });
+    }
+
+    private void takePhoto(int i) {
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, i);
     }
 
     private void addProperty1() {
+        if (mProperty.getAddress1() == null) {
+            Toast.makeText(getContext(), "Please enter the Address", Toast.LENGTH_LONG).show();
+            return;
+        }
         final ProgressDialog pDialog = new ProgressDialog(getContext(), R.style.AppTheme_Dark_Dialog);
         pDialog.setIndeterminate(true);
         pDialog.setMessage("Processing...");
@@ -364,12 +400,15 @@ public class NewPropertyFragment extends Fragment {
         /*-------image-----*/
         mTextImageName1 = (TextView) mView.findViewById(R.id.new_image_name1);
         mTextUploadButton1 = (TextView) mView.findViewById(R.id.new_image_upload1);
+        mTextTakePhoto1 = (TextView) mView.findViewById(R.id.new_image_take1);
         mImageUpload1 = (ImageView) mView.findViewById(R.id.upload_image1);
         mTextImageName2 = (TextView) mView.findViewById(R.id.new_image_name2);
         mTextUploadButton2 = (TextView) mView.findViewById(R.id.new_image_upload2);
+        mTextTakePhoto2 = (TextView) mView.findViewById(R.id.new_image_take2);
         mImageUpload2 = (ImageView) mView.findViewById(R.id.upload_image2);
         mTextImageName3 = (TextView) mView.findViewById(R.id.new_image_name3);
         mTextUploadButton3 = (TextView) mView.findViewById(R.id.new_image_upload3);
+        mTextTakePhoto3 = (TextView) mView.findViewById(R.id.new_image_take3);
         mImageUpload3 = (ImageView) mView.findViewById(R.id.upload_image3);
         /*-------image-----*/
     }
@@ -380,9 +419,7 @@ public class NewPropertyFragment extends Fragment {
         Log.d("newProperty","onActivityResult");
         if (requestCode == PICK_IMAGE_REQUEST_1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri picUri = data.getData();
-            filePath = getPath(picUri);
             mImageUpload1.setImageURI(picUri);
-            // mBitmap1 = setImage(data.getData(), mImageUpload1);
             try {
                 mBitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
             } catch (IOException e) {
@@ -392,8 +429,7 @@ public class NewPropertyFragment extends Fragment {
 
         } else if (requestCode == PICK_IMAGE_REQUEST_2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri picUri = data.getData();
-            filePath = getPath(picUri);
-            mImageUpload1.setImageURI(picUri);
+            mImageUpload2.setImageURI(picUri);
             try {
                 mBitmap2 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
             } catch (IOException e) {
@@ -402,13 +438,24 @@ public class NewPropertyFragment extends Fragment {
             mImageUpload2.setImageBitmap(mBitmap2);
         } else if (requestCode == PICK_IMAGE_REQUEST_3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri picUri = data.getData();
-            filePath = getPath(picUri);
-            mImageUpload1.setImageURI(picUri);
+            mImageUpload3.setImageURI(picUri);
             try {
                 mBitmap3 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            mImageUpload3.setImageBitmap(mBitmap3);
+        } else if (requestCode == TAKE_PHOTO_CODE_1 && resultCode == RESULT_OK) {
+            Log.d("CameraDemo", "Pic saved");
+            mBitmap1 = (Bitmap) data.getExtras().get("data");
+            mImageUpload1.setImageBitmap(mBitmap1);
+        } else if (requestCode == TAKE_PHOTO_CODE_2 && resultCode == RESULT_OK) {
+            Log.d("CameraDemo", "Pic saved");
+            mBitmap2 = (Bitmap) data.getExtras().get("data");
+            mImageUpload2.setImageBitmap(mBitmap2);
+        } else if (requestCode == TAKE_PHOTO_CODE_3 && resultCode == RESULT_OK) {
+            Log.d("CameraDemo", "Pic saved");
+            mBitmap3 = (Bitmap) data.getExtras().get("data");
             mImageUpload3.setImageBitmap(mBitmap3);
         }
     }
