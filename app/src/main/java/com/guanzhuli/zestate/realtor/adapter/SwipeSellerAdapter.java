@@ -45,7 +45,7 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
     public void onBindViewHolder(SwipeSellerHolder viewHolder, final int position) {
         viewHolder.mTextName.setText(mList.get(position).getName());
         viewHolder.mTextCost.setText(mList.get(position).getCost());
-        viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getmCategory()));
+        viewHolder.mTextCategory.setText(String.valueOf(mList.get(position).getCategory()));
         viewHolder.mTextAddress.setText(mList.get(position).getAddress1()
                 + " " +mList.get(position).getAddress2());
         viewHolder.mSwipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {

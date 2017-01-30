@@ -188,10 +188,17 @@ public class NewPropertyFragment extends Fragment {
     }
 
     private void addProperty1() {
+        final ProgressDialog pDialog = new ProgressDialog(getContext(), R.style.AppTheme_Dark_Dialog);
+        pDialog.setIndeterminate(true);
+        pDialog.setMessage("Processing...");
+        pDialog.show();
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, ADD_PROPERTY_URL, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse networkResponse) {
+                pDialog.dismiss();
                 Log.i("volley","success");
+                SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.seller_activity_container, sellerHomeFragment).commit();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -205,9 +212,11 @@ public class NewPropertyFragment extends Fragment {
                 params.put("propertyname", mEditName.getText().toString());
                 params.put("propertytype", mEditType.getText().toString());
                 params.put("propertycat", "2");
-                params.put("propertyaddress1", mProperty.getAddress1());
-                params.put("propertyaddress2", "hangzhou");
-                params.put("propertyzip", "60174");
+                // separate address
+                separate(mProperty.getAddress1());
+                params.put("propertyaddress1",mProperty.getAddress1());
+                params.put("propertyaddress2",mProperty.getAddress2());
+                params.put("propertyzip", String.valueOf(mProperty.getZip()));
                 params.put("propertylat", String.valueOf(mProperty.getLatitude()));
                 params.put("propertylong", String.valueOf(mProperty.getLongitude()));
                 params.put("propertycost", mEditCost.getText().toString());
@@ -236,6 +245,17 @@ public class NewPropertyFragment extends Fragment {
         VolleyController.getInstance().addToRequestQueue(volleyMultipartRequest);
     }
 
+    private void separate(String s) {
+        String temp = s;
+        mProperty.setAddress1(temp.substring(0,temp.indexOf(',')).trim());
+        String temp2 = s;
+        temp2 = temp2.substring(temp2.indexOf(',') + 1, temp2.lastIndexOf(',')).trim();
+        int t = temp2.lastIndexOf(' ');
+        String temp3 = temp2;
+        mProperty.setAddress2(temp2.substring(0, t));
+        mProperty.setZip(Integer.parseInt(temp3.substring(t).trim()));
+    }
+
     private void uploadClick(int requestCode) {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -249,16 +269,18 @@ public class NewPropertyFragment extends Fragment {
         pDialog.setMessage("Processing...");
         pDialog.show();
         String url = EDIT_PROPERTY_URL + mProperty.getId();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url, new Response.Listener<NetworkResponse>() {
             @Override
-            public void onResponse(String s) {
-                Log.d("NewProperty", "update success");
+            public void onResponse(NetworkResponse networkResponse) {
                 pDialog.dismiss();
+                Log.i("volley","success");
+                SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.seller_activity_container, sellerHomeFragment).commit();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                VolleyLog.d("NewProperty", "Error: " + volleyError.getMessage());
+                VolleyLog.d("volley", "Error: " + volleyError.getMessage());
             }
         }) {
             @Override
@@ -267,8 +289,8 @@ public class NewPropertyFragment extends Fragment {
                 params.put("propertyname", mEditName.getText().toString());
                 params.put("propertytype", mEditType.getText().toString());
                 params.put("propertycat", "2");
-                params.put("propertyaddress1", mProperty.getAddress1());
-                params.put("propertyaddress2", mProperty.getAddress2());
+                params.put("propertyaddress1",mProperty.getAddress1());
+                params.put("propertyaddress2",mProperty.getAddress2());
                 params.put("propertyzip", String.valueOf(mProperty.getZip()));
                 params.put("propertylat", String.valueOf(mProperty.getLatitude()));
                 params.put("propertylong", String.valueOf(mProperty.getLongitude()));
@@ -276,68 +298,28 @@ public class NewPropertyFragment extends Fragment {
                 params.put("propertysize", mEditSize.getText().toString());
                 params.put("propertydesc", mEditDescription.getText().toString());
                 params.put("propertystatus", "yes");
-                params.put("propertyimg1", "");
-                params.put("propertyimg2", "");
-                params.put("propertyimg3", "");
-                params.put("userid", "162");
+                params.put("userid", "17");
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() throws AuthFailureError {
+                Map<String, DataPart> params = new HashMap<>();
+                if (mBitmap1 != null) {
+                    params.put("propertyimg1", new DataPart(mEditName.getText().toString() + "1.jpg", getFileDataFromBitmap(mBitmap1)));
+                }
+                if (mBitmap2 != null) {
+                    params.put("propertyimg2", new DataPart(mEditName.getText().toString() + "2.jpg", getFileDataFromBitmap(mBitmap2)));
+                }
+                if (mBitmap3 != null) {
+                    params.put("propertyimg3", new DataPart(mEditName.getText().toString() + "3.jpg", getFileDataFromBitmap(mBitmap3)));
+                }
                 return params;
             }
         };
-        VolleyController.getInstance().addToRequestQueue(stringRequest);
+        VolleyController.getInstance().addToRequestQueue(volleyMultipartRequest);
     }
 
-    private void addProperty() {
-        final ProgressDialog pDialog = new ProgressDialog(getContext(), R.style.AppTheme_Dark_Dialog);
-        pDialog.setIndeterminate(true);
-        pDialog.setMessage("Processing...");
-        pDialog.show();
-        File file= new File("/sdcard/DCIM/Camera/" + "cache");
-        Tool.saveBmpToFile(mBitmap1, file, 100);
-        final Bitmap compress_mBitmap1 = new Compressor.Builder(getActivity())
-                .setMaxWidth(640)
-                .setMaxHeight(480)
-                .setQuality(75)
-                .setCompressFormat(Bitmap.CompressFormat.WEBP)
-                .build()
-                .compressToBitmap(file);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ADD_PROPERTY_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                if (s.contains("true")) {
-                    pDialog.dismiss();
-                    Log.d("NewProperty", "add success");
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                VolleyLog.d("NewProperty", "Error: " + volleyError.getMessage());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<>();
-                params.put("propertyname", mEditName.getText().toString());
-                params.put("propertytype", mEditType.getText().toString());
-                params.put("propertycat", "2");
-                params.put("propertyaddress1", "xihu qu");
-                params.put("propertyaddress2", "hangzhou");
-                params.put("propertyzip", "60174");
-                params.put("propertylat", "30");
-                params.put("propertylong", "120");
-                params.put("propertycost", mEditCost.getText().toString());
-                params.put("propertysize", mEditSize.getText().toString());
-                params.put("propertydesc", mEditDescription.getText().toString());
-                params.put("propertystatus", "yes");
-                params.put("propertyimg1", Tool.bitmapToBase64(compress_mBitmap1));
-                params.put("propertyimg2", "");
-                params.put("propertyimg3", "");
-                params.put("userid", "162");
-                return params;
-            }
-        };
-        VolleyController.getInstance().addToRequestQueue(stringRequest);
-    }
 
     private void setContent() {
         if (mProperty.getAddress2() == null) {
@@ -350,15 +332,21 @@ public class NewPropertyFragment extends Fragment {
         mEditCost.setText(mProperty.getCost());
         mEditSize.setText(mProperty.getSize());
         mEditDescription.setText(mProperty.getDescription());
-        Picasso.with(getContext())
-                .load(mProperty.getImage1())
-                .into(mImageUpload1);
-        Picasso.with(getContext())
-                .load(mProperty.getImage2())
-                .into(mImageUpload2);
-        Picasso.with(getContext())
-                .load(mProperty.getImage3())
-                .into(mImageUpload3);
+        if (mProperty.getImage1() != null) {
+            Picasso.with(getContext())
+                    .load(mProperty.getImage1())
+                    .into(mImageUpload1);
+        }
+        if (mProperty.getImage2() != null) {
+            Picasso.with(getContext())
+                    .load(mProperty.getImage2())
+                    .into(mImageUpload2);
+        }
+        if (mProperty.getImage3() != null) {
+            Picasso.with(getContext())
+                    .load(mProperty.getImage3())
+                    .into(mImageUpload3);
+        }
     }
 
     private void initView() {

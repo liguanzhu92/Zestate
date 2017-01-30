@@ -32,11 +32,11 @@ public class Property {
     private String mUserId;
     private ArrayList<Property> mPropertyList = new ArrayList<>();
 
-    public ArrayList<Property> getmPropertyList() {
+    public ArrayList<Property> getPropertyList() {
         return mPropertyList;
     }
 
-    public void setmPropertyList(ArrayList<Property> mPropertyList) {
+    public void setPropertyList(ArrayList<Property> mPropertyList) {
         this.mPropertyList = mPropertyList;
     }
 
@@ -64,12 +64,16 @@ public class Property {
         mType = type;
     }
 
-    public String getmCategory() {
+    public String getCategory() {
         return mCategory;
     }
 
-    public void setmCategory(String mCategory) {
-        this.mCategory = mCategory;
+    public void setCategory(String Category) {
+        if (Category.equals("1")) {
+            mCategory = "sell";
+        } else {
+            mCategory = "rent";
+        }
     }
     public String getAddress1() {
         return mAddress1;

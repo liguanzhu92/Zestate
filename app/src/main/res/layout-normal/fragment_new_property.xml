@@ -22,6 +22,7 @@
                 android:src="@drawable/ic_location"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <TextView
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:id="@+id/new_property_address"
                 android:layout_gravity="center_vertical"
@@ -35,6 +36,8 @@
             android:layout_width="match_parent" android:layout_height="1dp"/>
     <android.support.v4.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="match_parent">
         <LinearLayout
+                android:paddingLeft="@dimen/general_padding"
+                android:paddingRight="@dimen/general_padding"
                 android:orientation="vertical"
                 android:layout_width="match_parent" android:layout_height="wrap_content">
             <LinearLayout
@@ -42,6 +45,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_gravity="center_vertical"
                         android:text="Name:"
                         android:layout_weight="1.5"
@@ -58,6 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_gravity="center_vertical"
                         android:text="Type:"
                         android:layout_weight="1.5"
@@ -74,6 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_gravity="center_vertical"
                         android:text="Category:"
                         android:layout_weight="1.5"
@@ -89,6 +98,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_gravity="center_vertical"
                         android:text="Cost:"
                         android:layout_weight="1.5"
@@ -105,6 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_gravity="center_vertical"
                         android:text="Size:"
                         android:layout_weight="1.5"
@@ -121,6 +134,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="top"
                         android:text="Description:"
                         android:layout_weight="1.5"
@@ -148,9 +163,11 @@
                         android:layout_weight="1"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:id="@+id/new_image_name1"
                         android:layout_gravity="center_vertical"
-                        android:text="imagename1"
+                        android:text="Image 1"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
@@ -177,9 +194,11 @@
                         android:layout_weight="1"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:id="@+id/new_image_name2"
                         android:layout_gravity="center_vertical"
-                        android:text="imagename2"
+                        android:text="Image 2"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
@@ -206,9 +225,11 @@
                         android:layout_weight="1"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:id="@+id/new_image_name3"
                         android:layout_gravity="center_vertical"
-                        android:text="imagename3"
+                        android:text="Image 3"
                         android:layout_weight="4"
                         android:layout_width="0dp" android:layout_height="wrap_content"/>
                 <TextView

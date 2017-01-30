@@ -1,14 +1,10 @@
 package com.guanzhuli.zestate.realtor.fragment;
 
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,13 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.model.PostPropertyList;
@@ -124,7 +117,7 @@ public class PropertyDetailFragment extends Fragment {
         mTextAddress.setText(mProperty.getAddress1() + mProperty.getAddress2() );
         mTextName.setText(mProperty.getName());
         mTextType.setText(mProperty.getType());
-        mTextCategory.setText(String.valueOf(mProperty.getmCategory()));
+        mTextCategory.setText(String.valueOf(mProperty.getCategory()));
         mTextCost.setText(mProperty.getCost());
         mTextSize.setText(mProperty.getSize());
         mTextDescription.setText(mProperty.getDescription());

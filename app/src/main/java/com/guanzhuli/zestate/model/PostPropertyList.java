@@ -11,10 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Guanzhu Li on 1/22/2017.
@@ -51,7 +48,7 @@ public class PostPropertyList extends ArrayList<Property> {
                         property.setId(person.getString("Property Id"));
                         property.setName(person.getString("Property Name"));
                         property.setType(person.getString("Property Type"));
-                        property.setmCategory(person.getString("Property Category"));
+                        property.setCategory(person.getString("Property Category"));
                         property.setAddress1(person.getString("Property Address1"));
                         property.setAddress2(person.getString("Property Address2"));
                         property.setZip(Integer.parseInt(person.getString("Property Zip")));
