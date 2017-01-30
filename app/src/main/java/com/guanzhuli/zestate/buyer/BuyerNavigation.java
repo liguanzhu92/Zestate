@@ -157,6 +157,10 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         case R.id.bottom_view_type:
                             if (item.getTitle().equals("List")) {
                                 item.setTitle("Map");
+                                if (mSlidingUpPanelLayout != null &&
+                                        (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+                                    mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                                }
                                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                                 ft.replace(R.id.fragment_replaceble, new PropertyListView()).addToBackStack(null).commit();
                             } else {
