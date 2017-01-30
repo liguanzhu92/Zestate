@@ -219,7 +219,7 @@ public class PropertyDetailFragment extends Fragment {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
             if (position < mWebImageSize) {
                 Picasso.with(getContext())
-                        .load("http://" + mImageUrls.get(position))
+                        .load(mImageUrls.get(position))
                         .into(imageView);
             } else {
                 imageView.setImageResource(imageSrc[position]);

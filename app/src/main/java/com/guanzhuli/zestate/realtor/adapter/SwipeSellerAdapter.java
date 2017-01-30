@@ -15,14 +15,11 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.model.PostPropertyList;
 import com.guanzhuli.zestate.model.Property;
-import com.guanzhuli.zestate.realtor.SellerActivity;
 import com.guanzhuli.zestate.realtor.fragment.NewPropertyFragment;
 import com.guanzhuli.zestate.realtor.fragment.PropertyDetailFragment;
 import com.guanzhuli.zestate.realtor.fragment.SellerHomeFragment;
 import com.squareup.picasso.Picasso;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -77,7 +74,7 @@ public class SwipeSellerAdapter extends RecyclerSwipeAdapter<SwipeSellerHolder>{
         }
         if (headURL != null) {
                 Picasso.with(mContext)
-                        .load("http://" + headURL)
+                        .load(headURL)
                         .into(viewHolder.mImageHead);
         } else {
             viewHolder.mImageHead.setImageResource(R.mipmap.house_sample);

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="buyer_name1">
+        <item>"Mr. George O'Malley"</item>
+        <item>"Mr. Richard "</item>
+        <item>"Mr. Alex Karev"</item>
+        <item>"Mr. Lexie Grey"</item>
+        <item>"Mr. Jackson Avery"</item>
+    </string-array>
+
+    <string-array name="timings_array1">
+        <item>"15:00 to 15:30"</item>
+        <item>"10:30 to 11:00"</item>
+        <item>"15:30 to 16:00"</item>
+        <item>"11:30 to 12:00"</item>
+        <item>"9:00 to 9:30"</item>
+    </string-array>
+
+    <string-array name="mobile1">
+        <item>"5551231234"</item>
+        <item>"6661231234"</item>
+        <item>"7771231234"</item>
+        <item>"8881231234"</item>
+        <item>"9991231234"</item>
+    </string-array>
+
+    <string-array name="property_addr1">
+        <item>"2309 Johnson Avenue, Western Springs, IL"</item>
+        <item>"1838 Wessel ct, St Charles, IL"</item>
+        <item>"1203 E Main St, St Charles, IL"</item>
+        <item>"477 S 3rd St #124, Geneva, IL"</item>
+        <item>"1942 W Fabyan Pkwy, Batavia, IL"</item>
+    </string-array>
+
+    <string-array name="buyer_name2">
+        <item>"Mr. Meredith Grey"</item>
+        <item>"Mr. Addison Montgomery"</item>
+        <item>"Mr. Miranda Bailey"</item>
+    </string-array>
+
+    <string-array name="timings_array2">
+        <item>"08:00 to 08:30"</item>
+        <item>"09:00 to 09:30"</item>
+        <item>"10:00 to 10:30"</item>
+    </string-array>
+
+    <string-array name="mobile2">
+        <item>"2221231234"</item>
+        <item>"3331231234"</item>
+        <item>"4441231234"</item>
+    </string-array>
+
+    <string-array name="property_addr2">
+        <item>"1840 Wessel ct, St Charles, IL"</item>
+        <item>"3809 Illinois Avenue, St Charles, IL"</item>
+        <item>"1842 Wessel ct, St Charles, IL"</item>
+    </string-array>
+
+</resources>

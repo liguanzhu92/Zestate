@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#223D7B</color>
     <color name="colorAccent">#4E72CE</color>
     <color name="colorPrimaryLight">#8AA4DF</color>
+    <color name="calendarTint">#BED3F1</color>
 
     <color name="black_overlay">#66000000</color>
     <color name="white_overlay">#BBFFFFFF</color>

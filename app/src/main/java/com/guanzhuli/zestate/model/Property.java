@@ -100,7 +100,7 @@ public class Property {
     }
 
     public void setImage1(String image1) {
-        image1 = image1.replaceFirst("www.","http.//");
+        image1 = image1.replaceFirst("www.","http://");
         mImage1 = image1;
     }
 
@@ -110,7 +110,7 @@ public class Property {
 
     public void setImage2(String image2)
     {
-        image2 = image2.replaceFirst("www.","http.//");
+        image2 = image2.replaceFirst("www.","http://");
         mImage2 = image2;
     }
 

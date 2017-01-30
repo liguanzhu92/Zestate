@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.CursorLoader;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,15 +73,14 @@ public class NewPropertyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d("newProperty","onCreateView");
         mView =  inflater.inflate(R.layout.fragment_new_property, container, false);
         initView();
-
+        getFlag();
         return mView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    private void getFlag() {
         mBundle = this.getArguments();
         // from new: add = true, edit = false
         // from map edit: add = true, edit = true;
@@ -105,6 +106,10 @@ public class NewPropertyFragment extends Fragment {
             }
         });
         setClickListener();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void setClickListener() {
@@ -200,25 +205,31 @@ public class NewPropertyFragment extends Fragment {
                 params.put("propertyname", mEditName.getText().toString());
                 params.put("propertytype", mEditType.getText().toString());
                 params.put("propertycat", "2");
-                params.put("propertyaddress1", "xihu qu");
+                params.put("propertyaddress1", mProperty.getAddress1());
                 params.put("propertyaddress2", "hangzhou");
                 params.put("propertyzip", "60174");
-                params.put("propertylat", "30");
-                params.put("propertylong", "120");
+                params.put("propertylat", String.valueOf(mProperty.getLatitude()));
+                params.put("propertylong", String.valueOf(mProperty.getLongitude()));
                 params.put("propertycost", mEditCost.getText().toString());
                 params.put("propertysize", mEditSize.getText().toString());
                 params.put("propertydesc", mEditDescription.getText().toString());
                 params.put("propertystatus", "yes");
-                params.put("userid", "162");
+                params.put("userid", "17");
                 return params;
             }
 
             @Override
             protected Map<String, DataPart> getByteData() throws AuthFailureError {
                 Map<String, DataPart> params = new HashMap<>();
-                params.put("propertyimg1", new DataPart("test1.jpg", getFileDataFromBitmap(mBitmap1)));
-                //params.put("propertyimg2", );
-                //params.put("propertyimg3", );
+                if (mBitmap1 != null) {
+                    params.put("propertyimg1", new DataPart(mEditName.getText().toString() + "1.jpg", getFileDataFromBitmap(mBitmap1)));
+                }
+                if (mBitmap2 != null) {
+                    params.put("propertyimg2", new DataPart(mEditName.getText().toString() + "2.jpg", getFileDataFromBitmap(mBitmap2)));
+                }
+                if (mBitmap3 != null) {
+                    params.put("propertyimg3", new DataPart(mEditName.getText().toString() + "3.jpg", getFileDataFromBitmap(mBitmap3)));
+                }
                 return params;
             }
         };
@@ -340,13 +351,13 @@ public class NewPropertyFragment extends Fragment {
         mEditSize.setText(mProperty.getSize());
         mEditDescription.setText(mProperty.getDescription());
         Picasso.with(getContext())
-                .load("http://" + mProperty.getImage1())
+                .load(mProperty.getImage1())
                 .into(mImageUpload1);
         Picasso.with(getContext())
-                .load("http://" + mProperty.getImage2())
+                .load(mProperty.getImage2())
                 .into(mImageUpload2);
         Picasso.with(getContext())
-                .load("http://" + mProperty.getImage3())
+                .load(mProperty.getImage3())
                 .into(mImageUpload3);
     }
 
@@ -378,17 +389,20 @@ public class NewPropertyFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("newProperty","onActivityResult");
         if (requestCode == PICK_IMAGE_REQUEST_1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
             Uri picUri = data.getData();
-
             filePath = getPath(picUri);
-
             Log.d("picUri", picUri.toString());
             Log.d("filePath", filePath);
-
             mImageUpload1.setImageURI(picUri);
-            mBitmap1 = setImage(data.getData(), mImageUpload1);
+            // mBitmap1 = setImage(data.getData(), mImageUpload1);
+            try {
+                mBitmap1 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mImageUpload1.setImageBitmap(mBitmap1);
 
         } else if (requestCode == PICK_IMAGE_REQUEST_2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mBitmap2 = setImage(data.getData(), mImageUpload2);
@@ -397,16 +411,6 @@ public class NewPropertyFragment extends Fragment {
         }
     }
 
-    /*    private Bitmap setImage(Uri filePath, ImageView imageUpload) {
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
-                imageUpload.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                return bitmap;
-            }*/
     private Bitmap setImage(Uri filePath, ImageView imageUpload) {
         Bitmap bitmap = null;
         try {
@@ -435,4 +439,67 @@ public class NewPropertyFragment extends Fragment {
         return byteArrayOutputStream.toByteArray();
     }
 
+    private Bitmap getBitmapFromByte(byte[] file) {
+        return BitmapFactory.decodeByteArray(file, 0, file.length);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("newProperty","onPause");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("newProperty","onSaveInstanceState");
+        outState.putString("mName",mEditName.getText().toString());
+        outState.putString("mType",mEditType.getText().toString());
+        outState.putString("mCost",mEditCost.getText().toString());
+        outState.putString("mSize",mEditSize.getText().toString());
+        outState.putString("mDescription",mEditDescription.getText().toString());
+        if (mBitmap1 != null) {
+            outState.putByteArray("mImage1", getFileDataFromBitmap(mBitmap1));
+        }
+        if (mBitmap2 != null) {
+            outState.putByteArray("mImage2", getFileDataFromBitmap(mBitmap2));
+        }
+        if (mBitmap3 != null) {
+            outState.putByteArray("mImage3", getFileDataFromBitmap(mBitmap3));
+        }
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d("newProperty","onActivityCreated");
+        customRestoreView(savedInstanceState);
+
+    }
+
+    private void customRestoreView(Bundle savedInstanceState) {
+        if (savedInstanceState != null){
+            mEditName.setText(savedInstanceState.getString("mName"));
+            mEditType.setText(savedInstanceState.getString("mType"));
+            mEditCost.setText(savedInstanceState.getString("mCost"));
+            mEditSize.setText(savedInstanceState.getString("mSize"));
+            mEditDescription.setText(savedInstanceState.getString("mDescription"));
+            if (savedInstanceState.getByteArray("mImage1") != null) {
+                mImageUpload1.setImageBitmap(getBitmapFromByte(savedInstanceState.getByteArray("mImage1")));
+            }
+            if (savedInstanceState.getByteArray("mImage2") != null) {
+                mImageUpload2.setImageBitmap(getBitmapFromByte(savedInstanceState.getByteArray("mImage2")));
+            }
+            if (savedInstanceState.getByteArray("mImage3") != null) {
+                mImageUpload3.setImageBitmap(getBitmapFromByte(savedInstanceState.getByteArray("mImage3")));
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("newProperty","onStop");
+    }
 }
