@@ -58,6 +58,23 @@
                     android:text="8000Sq.ft"/>
             </LinearLayout>
 
+            <android.support.v7.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="true"
+                app:cardCornerRadius="60dp"
+                android:id="@+id/property_card_map_view"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp">
+                <com.google.android.gms.maps.MapView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/property_location_map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment">
+                </com.google.android.gms.maps.MapView>
+            </android.support.v7.widget.CardView>
 
 
         </RelativeLayout>
@@ -65,21 +82,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/property_desc_text_view"/>
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            app:cardUseCompatPadding="true"
-            app:cardPreventCornerOverlap="true"
-            app:cardCornerRadius="3dp"
-            android:id="@+id/property_card_map_view">
-            <com.google.android.gms.maps.MapView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/property_location_map"
-                android:layout_gravity="center"
-                android:name="com.google.android.gms.maps.SupportMapFragment">
-            </com.google.android.gms.maps.MapView>
-        </android.support.v7.widget.CardView>
 
         <include
             android:id="@+id/contact_agent_layout"

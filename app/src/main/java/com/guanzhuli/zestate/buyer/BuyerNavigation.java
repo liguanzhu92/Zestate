@@ -65,7 +65,7 @@ import java.util.List;
 public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener
-        ,PropertyRecyclerView.OnClickCard{
+        , PropertyRecyclerView.OnClickCard {
 
     private GoogleMap mGoogleMap;
     private GoogleApiClient mGoogleApiClient;
@@ -77,8 +77,8 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
     private SlidingUpPanelLayout mSlidingUpPanelLayout;
     private PropertyRecyclerView mPropertyadapter;
     RecyclerView mRecyclerView;
-    HashMap<String,Integer> markerIdHashMap;
-    HashMap<Integer,Marker> markerHashMap;
+    HashMap<String, Integer> markerIdHashMap;
+    HashMap<Integer, Marker> markerHashMap;
     private ProgressDialog pd;
     private Location mLocation;
     private ArrayList<Property> propertyList;
@@ -110,7 +110,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(mRecyclerView);
-            mPropertyadapter = new PropertyRecyclerView(BuyerNavigation.this,this);
+            mPropertyadapter = new PropertyRecyclerView(BuyerNavigation.this, this);
             mRecyclerView.setAdapter(mPropertyadapter);
             mPropertyadapter.notifyDataSetChanged();
             mSlidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slideUpPanelLayout);
@@ -155,6 +155,10 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         case R.id.bottom_view_type:
                             if (item.getTitle().equals("List")) {
                                 item.setTitle("Map");
+                                if (mSlidingUpPanelLayout != null &&
+                                        (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+                                    mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                                }
                                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                                 ft.replace(R.id.fragment_replaceble, new PropertyListView()).addToBackStack(null).commit();
                             } else {
@@ -173,9 +177,9 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
 
-                    if(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0){
-                        if(mPreviousMarker!=null)
-                        setMarkerOptionsOnChange(markerIdHashMap.get(mPreviousMarker.getId()));
+                    if (mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0) {
+                        if (mPreviousMarker != null)
+                            setMarkerOptionsOnChange(markerIdHashMap.get(mPreviousMarker.getId()));
                         Integer postion = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
                         Marker marker = markerHashMap.get(postion);
                         markerIdHashMap.remove(marker.getId());
@@ -183,15 +187,15 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         marker.remove();
                         Property property = propertyList.get(postion);
                         MarkerOptions markerOptions = new MarkerOptions();
-                        LatLng latLng = new LatLng(property.getLatitude(),property.getLongitude());
+                        LatLng latLng = new LatLng(property.getLatitude(), property.getLongitude());
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                         markerOptions.position(latLng);
                         markerOptions.title(property.getAddress1());
                         Marker newmarker = mGoogleMap.addMarker(markerOptions);
                         mPreviousMarker = newmarker;
-                        markerIdHashMap.put(newmarker.getId(),postion);
-                        markerHashMap.put(postion,newmarker);
-                        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+                        markerIdHashMap.put(newmarker.getId(), postion);
+                        markerHashMap.put(postion, newmarker);
+                        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
                     }
 
                 }
@@ -205,7 +209,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else if (mSlidingUpPanelLayout != null &&
+        } else if (mSlidingUpPanelLayout != null &&
                 (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
             mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
@@ -260,7 +264,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
         getRealEstatedata();
         mGoogleMap = googleMap;
         markerIdHashMap = new HashMap<>();
-        markerHashMap =new HashMap<>();
+        markerHashMap = new HashMap<>();
         //setLocation();
         if (mGoogleMap != null) {
             mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -328,7 +332,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         property.setUserId(jsonProperty.getString("User Id"));
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        if(pd.isShowing())
+                        if (pd.isShowing())
                             pd.dismiss();
                     }
                     mPropertyList.add(property);
@@ -337,6 +341,22 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if (mLocation == null) {
+                            if (ActivityCompat.checkSelfPermission(BuyerNavigation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                                    ActivityCompat.checkSelfPermission(BuyerNavigation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                // TODO: Consider calling
+                                //    ActivityCompat#requestPermissions
+                                // here to request the missing permissions, and then overriding
+                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                //                                          int[] grantResults)
+                                // to handle the case where the user grants the permission. See the documentation
+                                // for ActivityCompat#requestPermissions for more details.
+                                return;
+                            }
+                            mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                        }
+                        UserLocation userLocation = VolleyController.getInstance().getUserLocation();
+                        userLocation.setmCurrentLocation(mLocation);
                         mPropertyadapter.notifyItemRangeChanged(0, mPropertyList.size());
                         mPropertyadapter.notifyOnDataChange();
                         showAllPropertiesList();
