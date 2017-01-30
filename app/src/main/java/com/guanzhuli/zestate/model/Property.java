@@ -31,34 +31,6 @@ public class Property {
     private String mStatus;
     private String mUserId;
 
-    public Bitmap getBitmap1() {
-        return mBitmap1;
-    }
-
-    public void setBitmap1(Bitmap bitmap1) {
-        mBitmap1 = bitmap1;
-    }
-
-    public Bitmap getBitmap2() {
-        return mBitmap2;
-    }
-
-    public void setBitmap2(Bitmap bitmap2) {
-        mBitmap2 = bitmap2;
-    }
-
-    public Bitmap getBitmap3() {
-        return mBitmap3;
-    }
-
-    public void setBitmap3(Bitmap bitmap3) {
-        mBitmap3 = bitmap3;
-    }
-
-    private Bitmap mBitmap1;
-    private Bitmap mBitmap2;
-    private Bitmap mBitmap3;
-
     private ArrayList<Property> mPropertyList = new ArrayList<>();
 
     public ArrayList<Property> getPropertyList() {
