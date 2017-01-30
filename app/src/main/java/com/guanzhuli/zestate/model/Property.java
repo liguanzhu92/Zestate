@@ -107,7 +107,7 @@ public class Property implements Comparable<Property>{
     }
 
     public void setImage1(String image1) {
-        image1 = image1.replaceFirst("www.","http.//");
+        image1 = image1.replaceFirst("www.","http://");
         mImage1 = image1;
     }
 
@@ -117,7 +117,7 @@ public class Property implements Comparable<Property>{
 
     public void setImage2(String image2)
     {
-        image2 = image2.replaceFirst("www.","http.//");
+        image2 = image2.replaceFirst("www.","http://");
         mImage2 = image2;
     }
 
@@ -127,7 +127,7 @@ public class Property implements Comparable<Property>{
 
     public void setImage3(String image3)
     {
-        image3 = image3.replaceFirst("www.","http.//");
+        image3 = image3.replaceFirst("www.","http://");
         mImage3 = image3;
     }
 
