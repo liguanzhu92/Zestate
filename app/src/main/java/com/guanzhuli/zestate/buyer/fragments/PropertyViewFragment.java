@@ -7,11 +7,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -30,17 +30,17 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.buyer.adapters.AppointmentReminder;
 import com.guanzhuli.zestate.buyer.adapters.PropertyImagesRecyclerView;
-import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
 import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.model.AgentInfo;
 import com.guanzhuli.zestate.model.Property;
@@ -71,6 +71,7 @@ public class PropertyViewFragment extends Fragment implements
     TextView mSelectedDateText,mSelectedTimeText;
     private  int appointmentDay,appointmentMonth,appointmentHours,appointmentMinnutes;
     private int appointmentYear;
+    MapView mMapView;
 
 
     public PropertyViewFragment() {
@@ -212,7 +213,6 @@ public class PropertyViewFragment extends Fragment implements
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + "7818271119"));
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -224,18 +224,31 @@ public class PropertyViewFragment extends Fragment implements
                     Log.d(PropertyViewFragment.class.getSimpleName(), "permission Failed");
             return;
         }
-        Log.d(PropertyViewFragment.class.getSimpleName(),"permission is good");
+        Log.d(PropertyViewFragment.class.getSimpleName(), "permission is good");
         getActivity().startActivity(intent);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MapView mMapView = (MapView) view.findViewById(R.id.property_location_map);
+        mMapView = (MapView) view.findViewById(R.id.property_location_map);
+        //supportMapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.property_location_map);
         if (mMapView != null) {
             mMapView.onCreate(savedInstanceState);
             mMapView.getMapAsync(this);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
     }
 
     private void setPropertyImages() {
@@ -271,13 +284,16 @@ public class PropertyViewFragment extends Fragment implements
         mCardMap = googleMap;
             LatLng ll = new LatLng(mProperty.getLatitude(),mProperty.getLongitude());
             mCardMap.addMarker(new MarkerOptions().position(ll)
-            .title("property location"));
+                    .title("property location"));
             mCardMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ll, 12.0f));
-
-        mCardMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        mCardMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
-
+            public boolean onMarkerClick(Marker marker) {
+                Toast.makeText(getActivity(), "markerClicked cllick working", Toast.LENGTH_LONG).show();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.addToBackStack(null).replace(R.id.fragment_replaceble, PropertyMapViewFragment.newInstace(mParam1))
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out).commit();
+                return false;
             }
         });
     }
@@ -389,5 +405,11 @@ public class PropertyViewFragment extends Fragment implements
                 alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
 
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
     }
 }

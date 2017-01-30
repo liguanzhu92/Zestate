@@ -1,15 +1,19 @@
 package com.guanzhuli.zestate.model;
 
+import android.location.Location;
 import android.util.Log;
 
+import com.guanzhuli.zestate.buyer.BuyerNavigation;
 import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
+import com.guanzhuli.zestate.controller.VolleyController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Guanzhu Li on 1/21/2017.
  */
-public class Property {
+public class Property implements Comparable<Property>{
     private String mId;
     private String mName;
     private String mType;
@@ -33,6 +37,9 @@ public class Property {
     private ArrayList<Property> mPropertyList = new ArrayList<>();
 
     public ArrayList<Property> getmPropertyList() {
+        Log.d(BuyerNavigation.class.getSimpleName(),mPropertyList.toString());
+        Collections.sort(mPropertyList);
+        Log.d(BuyerNavigation.class.getSimpleName(), mPropertyList.toString());
         return mPropertyList;
     }
 
@@ -215,6 +222,26 @@ public class Property {
             }
         }
         return property;
+    }
+
+    @Override
+    public int compareTo(Property o) {
+        Location location = VolleyController.getInstance().getUserLocation().getmCurrentLocation();
+        Location thisLocati = new Location("");
+        thisLocati.setLatitude(this.getLatitude());
+        thisLocati.setLongitude(this.getLongitude());
+
+        Location oLocati = new Location("");
+        oLocati.setLatitude(o.getLatitude());
+        oLocati.setLongitude(o.getLongitude());
+
+        if(location.distanceTo(thisLocati)<location.distanceTo(oLocati)){
+            Log.d(BuyerNavigation.class.getSimpleName(),this.getName()+location.distanceTo(thisLocati)/1000+":"+
+                    location.distanceTo(oLocati)/1000+o.getName());
+            return -1;
+        }
+
+        return 0;
     }
 
 
