@@ -1,7 +1,6 @@
 package com.guanzhuli.zestate.realtor.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.CursorLoader;
 import android.graphics.Bitmap;
@@ -18,15 +17,12 @@ import android.view.ViewGroup;
 
 import android.widget.*;
 import com.android.volley.*;
-import com.android.volley.toolbox.StringRequest;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.controller.VolleyController;
 import com.guanzhuli.zestate.controller.VolleyMultipartRequest;
 import com.guanzhuli.zestate.model.PostPropertyList;
 import com.guanzhuli.zestate.model.Property;
-import com.guanzhuli.zestate.realtor.util.Tool;
 import com.squareup.picasso.Picasso;
-import id.zelory.compressor.Compressor;
 import android.database.Cursor;
 
 import java.io.*;

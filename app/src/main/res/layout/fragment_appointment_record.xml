@@ -19,9 +19,14 @@
             android:layout_gravity="end"
             android:text="Calender"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    <CalendarView
-            android:layout_width="match_parent"
-            android:layout_height="300dp" android:id="@+id/seller_calendarView"/>
+    <TextView
+            android:padding="@dimen/general_padding"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:text="Appointment Date"
+            android:id="@+id/appointment_selected_date"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
     <android.support.v7.widget.RecyclerView
             android:id="@+id/seller_appointment_content"
             android:layout_width="match_parent"
