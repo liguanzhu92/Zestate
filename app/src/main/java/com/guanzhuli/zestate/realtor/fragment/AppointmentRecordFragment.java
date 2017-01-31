@@ -11,12 +11,15 @@ import android.view.ViewGroup;
 
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.guanzhuli.zestate.R;
 import com.guanzhuli.zestate.realtor.adapter.CalendarAdapter;
 import com.guanzhuli.zestate.realtor.util.CalendarCard;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -45,14 +48,15 @@ public class AppointmentRecordFragment extends Fragment {
         mTextShowCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mCalendarView.getVisibility() == View.VISIBLE) {
+/*                if (mCalendarView.getVisibility() == View.VISIBLE) {
                     mCalendarView.setVisibility(View.GONE);
                     return;
                 }
                 if (mCalendarView.getVisibility() == View.GONE) {
                     mCalendarView.setVisibility(View.VISIBLE);
                     return;
-                }
+                }*/
+                selectDate();
             }
         });
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -70,7 +74,31 @@ public class AppointmentRecordFragment extends Fragment {
 
         return view;
     }
+    private void selectDate() {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+                                                                @Override
+                                                                public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                                                                    Toast.makeText(getContext(), "Set Adapter", Toast.LENGTH_LONG).show();
+                                                                }
+                                                            }, now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+        dpd.dismissOnPause(true);
+        dpd.showYearPickerFirst(true);
+        Calendar[] days = new Calendar[3];
+        Calendar day = Calendar.getInstance();
+        day.add(Calendar.DAY_OF_MONTH, 2);
+        days[0] = day;
+        Calendar day1 = Calendar.getInstance();
+        day1.add(Calendar.DAY_OF_MONTH,3);
+        days[1] = day1;
+        Calendar day2 = Calendar.getInstance();
+        day2.add(Calendar.DAY_OF_MONTH,5);
+        days[2] = day2;
+        dpd.setSelectableDays(days);
+        dpd.show(getActivity().getFragmentManager(),"DatePicker");
 
+    }
     private void changeAdapter(String s) {
         mList.clear();
         if (s.equals("2017028")) {
