@@ -72,7 +72,6 @@
                 android:layout_gravity="center"
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:background="@drawable/button_outline"
                 android:text="Call"
                 android:id="@+id/contact_agent_call"/>
         <Button
@@ -83,7 +82,7 @@
                 android:layout_gravity="center"
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:background="@drawable/button_outline"
+
                 android:text="Message" />
     </LinearLayout>
 

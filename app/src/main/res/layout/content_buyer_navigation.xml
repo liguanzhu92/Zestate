@@ -48,7 +48,8 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay" >
                     <SearchView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:id="@+id/search_by_intrest">
 
                     </SearchView>
                 </android.support.v7.widget.Toolbar>

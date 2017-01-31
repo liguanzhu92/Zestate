@@ -28,7 +28,7 @@ public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerV
     FragmentActivity mContext;
     OnClickCard mOnclickCard;
     public PropertyRecyclerView(Context context,OnClickCard mOnclickCard){
-        mPropertyList= VolleyController.getInstance().getmProperty().getPropertyList();
+        mPropertyList= VolleyController.getInstance().getmProperty().getPropertyList(null,null);
         this.mContext = (FragmentActivity) context;
         this.mOnclickCard = mOnclickCard;
     }
@@ -92,9 +92,9 @@ public class PropertyRecyclerView extends RecyclerView.Adapter<PropertyRecyclerV
         }
     }
 
-    public void notifyOnDataChange(){
+    public void notifyOnDataChange(Double lat, Double longit){
         mPropertyList.clear();
-        mPropertyList = VolleyController.getInstance().getmProperty().getPropertyList();
+        mPropertyList = VolleyController.getInstance().getmProperty().getPropertyList(lat,longit);
         this.notifyDataSetChanged();
     }
 

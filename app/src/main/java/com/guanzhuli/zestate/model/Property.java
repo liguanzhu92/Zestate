@@ -1,16 +1,20 @@
 package com.guanzhuli.zestate.model;
 
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.util.Log;
 
+import com.guanzhuli.zestate.buyer.BuyerNavigation;
 import com.guanzhuli.zestate.buyer.adapters.PropertyRecyclerView;
+import com.guanzhuli.zestate.controller.VolleyController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Guanzhu Li on 1/21/2017.
  */
-public class Property {
+public class Property implements Comparable<Property> {
     private String mId;
     private String mName;
     private String mType;
@@ -62,6 +66,7 @@ public class Property {
     private ArrayList<Property> mPropertyList = new ArrayList<>();
 
     public ArrayList<Property> getPropertyList() {
+        Collections.sort(mPropertyList);
         return mPropertyList;
     }
 
@@ -242,4 +247,41 @@ public class Property {
         return property;
     }
 
+    @Override
+    public int compareTo(Property o) {
+        Location currentLocation = VolleyController.getInstance().getUserLocation().getmCurrentLocation();
+        Location thisLocation = new Location("");
+        thisLocation.setLatitude(this.getLatitude());
+        thisLocation.setLongitude(this.getLongitude());
+        Location oLocation = new Location("");
+        oLocation.setLatitude(o.getLatitude());
+        oLocation.setLongitude(o.getLongitude());
+        if(currentLocation.distanceTo(thisLocation)<=currentLocation.distanceTo(oLocation))
+            return -1;
+        return 0;
+    }
+
+    public ArrayList<Property> getPropertyList(Double lat, Double longit) {
+        ArrayList<Property> mArrayList = new ArrayList<>();
+
+        if(lat == null && longit == null){
+            Collections.sort(mPropertyList);
+            mArrayList.addAll(mPropertyList);
+        }else{
+            Location location = new Location("");
+            location.setLatitude(lat);
+            location.setLongitude(longit);
+            for (Property property : mPropertyList){
+                Location arrayLocation = new Location("");
+                arrayLocation.setLatitude(property.getLatitude());
+                arrayLocation.setLongitude(property.getLongitude());
+                if(location.distanceTo(arrayLocation)/1000 <=160){
+                    Log.d(BuyerNavigation.class.getSimpleName(),"in location"+location.distanceTo(arrayLocation)/1000 );
+                    mArrayList.add(property);
+                }
+            }
+        }
+
+        return mArrayList;
+    }
 }

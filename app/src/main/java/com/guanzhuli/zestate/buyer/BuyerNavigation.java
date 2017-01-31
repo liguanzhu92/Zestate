@@ -10,6 +10,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -85,6 +87,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
     private LinearLayoutManager mLinearLayoutManager;
     private static final int INTERVAL = 60 * 1000;
     private static final int FASTINTERVAL = 60 * 500;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                     this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawer.setDrawerListener(toggle);
             toggle.syncState();
+            mSearchView = (SearchView) toolbar.findViewById(R.id.search_by_intrest);
             mRecyclerView = (RecyclerView) findViewById(R.id.map_recycler_view);
             mLinearLayoutManager = new LinearLayoutManager(BuyerNavigation.this, LinearLayoutManager.HORIZONTAL, false);
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -201,6 +205,61 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                 }
             });
         }
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(BuyerNavigation.class.getSimpleName(),"query Submited");
+                if(!query.equalsIgnoreCase("")){
+                    Geocoder geo = new Geocoder(BuyerNavigation.this);
+                    try {
+                        List<Address> addresses = geo.getFromLocationName(query,1);
+                        if(addresses.size()>0) {
+                            Address address = addresses.get(0);
+                            Double lat = address.getLatitude();
+                            Double longit= address.getLongitude();
+                            int size = propertyList.size();
+                            propertyList=VolleyController.getInstance().getmProperty().getPropertyList(lat,longit);
+                            if(propertyList.size()>0){
+                                markerIdHashMap.clear();
+                                for (int i = 0;i<size;i++){
+                                    Marker marker =markerHashMap.get(i);
+                                    marker.remove();
+                                }
+                                markerHashMap.clear();
+                                mPropertyadapter.notifyOnDataChange(lat,longit);
+                                showAllPropertiesList();
+
+                            } else{
+                                Toast.makeText(BuyerNavigation.this,"no Location found",Toast.LENGTH_LONG).show();
+                                Snackbar.make(mSearchView,"no Location found",Snackbar.LENGTH_LONG).show();
+                                propertyList=VolleyController.getInstance().getmProperty().getPropertyList(null,null);
+                                markerIdHashMap.clear();
+                                for (int i = 0;i<size;i++){
+                                    Marker marker =markerHashMap.get(i);
+                                    marker.remove();
+                                }
+                                markerHashMap.clear();
+                                mPropertyadapter.notifyOnDataChange(lat, longit);
+                                showAllPropertiesList();
+                            }
+                        }else{
+                            Toast.makeText(BuyerNavigation.this,"no Location found",Toast.LENGTH_LONG).show();
+                            Snackbar.make(mSearchView,"no Location found",Snackbar.LENGTH_LONG).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(BuyerNavigation.class.getSimpleName(),"query changed");
+                return false;
+            }
+        });
     }
 
 
@@ -357,8 +416,7 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
                         }
                         UserLocation userLocation = VolleyController.getInstance().getUserLocation();
                         userLocation.setmCurrentLocation(mLocation);
-                        mPropertyadapter.notifyItemRangeChanged(0, mPropertyList.size());
-                        mPropertyadapter.notifyOnDataChange();
+                        mPropertyadapter.notifyOnDataChange(null,null);
                         showAllPropertiesList();
                     }
                 });
@@ -464,7 +522,8 @@ public class BuyerNavigation extends AppCompatActivity implements OnMapReadyCall
     }
 */
     public void showAllPropertiesList() {
-        propertyList = VolleyController.getInstance().getmProperty().getPropertyList();
+        if(propertyList == null)
+        propertyList = VolleyController.getInstance().getmProperty().getPropertyList(null,null);
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (int i = 0; i < propertyList.size(); i++) {
             String houseType = propertyList.get(i).getType();

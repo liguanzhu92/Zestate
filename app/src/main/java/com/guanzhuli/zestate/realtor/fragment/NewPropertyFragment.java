@@ -382,7 +382,7 @@ public class NewPropertyFragment extends Fragment {
             Uri picUri = data.getData();
             filePath = getPath(picUri);
             Log.d("picUri", picUri.toString());
-            Log.d("filePath", filePath);
+          //  Log.d("filePath", filePath);
             mImageUpload1.setImageURI(picUri);
             // mBitmap1 = setImage(data.getData(), mImageUpload1);
             try {
@@ -391,13 +391,13 @@ public class NewPropertyFragment extends Fragment {
                 e.printStackTrace();
             }
             mImageUpload1.setImageBitmap(mBitmap1);
-            mProperty.setBitmap1(mBitmap1);
+//            mProperty.setBitmap1(mBitmap1);
 
         } else if (requestCode == PICK_IMAGE_REQUEST_2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri picUri = data.getData();
             filePath = getPath(picUri);
             Log.d("picUri", picUri.toString());
-            Log.d("filePath", filePath);
+            //Log.d("filePath", filePath);
             mImageUpload1.setImageURI(picUri);
             try {
                 mBitmap2 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
@@ -405,12 +405,12 @@ public class NewPropertyFragment extends Fragment {
                 e.printStackTrace();
             }
             mImageUpload2.setImageBitmap(mBitmap2);
-            mProperty.setBitmap2(mBitmap2);
+  //          mProperty.setBitmap2(mBitmap2);
         } else if (requestCode == PICK_IMAGE_REQUEST_3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri picUri = data.getData();
             filePath = getPath(picUri);
             Log.d("picUri", picUri.toString());
-            Log.d("filePath", filePath);
+            //Log.d("filePath", filePath);
             mImageUpload1.setImageURI(picUri);
             try {
                 mBitmap3 = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), data.getData());
@@ -418,7 +418,7 @@ public class NewPropertyFragment extends Fragment {
                 e.printStackTrace();
             }
             mImageUpload3.setImageBitmap(mBitmap3);
-            mProperty.setBitmap3(mBitmap3);
+    //        mProperty.setBitmap3(mBitmap3);
         }
     }
     private String getPath(Uri contentUri) {
